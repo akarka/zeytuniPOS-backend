@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Satış Listesi</title>
+</head>
+<body>
+  <h2>Satışlar</h2>
+  <ul id="satis-listesi"></ul>
+
+  <script>
+    fetch('http://localhost:8080/api/satislar') // Spring Boot API endpoint
+      .then(response => response.json())
+      .then(data => {
+        const liste = document.getElementById('satis-listesi');
+        data.forEach(satis => {
+          const li = document.createElement('li');
+          li.textContent = `Ürün ID: ${satis.urunId}, Miktar: ${satis.miktar}, Fiyat: ${satis.satisFiyati}, Tarih: ${satis.satisTarihi}`;
+          liste.appendChild(li);
+        });
+      })
+      .catch(error => console.error('Veri alınamadı:', error));
+  </script>
+</body>
+</html>
