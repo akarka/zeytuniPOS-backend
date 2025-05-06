@@ -12,12 +12,10 @@ import java.util.List;
 @Service
 public class SatisService extends AbstractService<Satis, Integer> {
 
-    /*private final GecmisService gecmisService;*/
     private final SatisRepository repository;
 
     public SatisService(SatisRepository repository, GecmisService gecmisService, IslemLogService islemLogService) {
         super(repository);
-        /*this.gecmisService = gecmisService;*/
         this.repository = repository;
 
     }
@@ -46,11 +44,6 @@ public class SatisService extends AbstractService<Satis, Integer> {
         }
         Satis kayit = super.create(satis);
 
-        /*Gecmis gecmis = new Gecmis();
-        gecmis.setUrunId(kayit.getUrunId());
-        gecmis.setSatisFiyati(kayit.getSatisFiyati());
-        gecmis.setSatisTarihi(kayit.getSatisTarihi());
-        gecmisService.create(gecmis);*/
 
         return kayit;
     }
