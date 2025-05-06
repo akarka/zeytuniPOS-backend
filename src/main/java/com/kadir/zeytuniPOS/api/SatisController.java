@@ -56,8 +56,8 @@ public class SatisController extends BaseController<Satis, Integer> {
     @Override
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
-        Satis silinecek = satisService.getById(id);
+        Satis silinmis = satisService.getById(id);
         satisService.delete(id);
-        islemLogService.logger(1, silinecek, "DELETE"); // loglama - sabit kullanıcı
+        islemLogService.logger(1, silinmis, "DELETE"); // loglama - sabit kullanıcı
     }
 }
