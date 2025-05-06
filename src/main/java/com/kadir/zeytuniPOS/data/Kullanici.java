@@ -21,6 +21,10 @@ public class Kullanici {
     @Column(nullable = false)
     private boolean aktif = true;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "KullaniciRolleri", joinColumns = @JoinColumn(name = "KullaniciID"), inverseJoinColumns = @JoinColumn(name = "RolID"))
+    private Set<Rol> roller = new HashSet<>();
+
     public Integer getKullaniciId() {
         return kullaniciId;
     }
@@ -28,10 +32,6 @@ public class Kullanici {
     public void setKullaniciId(Integer kullaniciId) {
         this.kullaniciId = kullaniciId;
     }
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "KullaniciRolleri", joinColumns = @JoinColumn(name = "KullaniciID"), inverseJoinColumns = @JoinColumn(name = "RolID"))
-    private Set<Rol> roller = new HashSet<>();
 
     public String getKullaniciAdi() {
         return kullaniciAdi;
