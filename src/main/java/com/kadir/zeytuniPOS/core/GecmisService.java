@@ -23,7 +23,7 @@ public class GecmisService extends AbstractService<Gecmis, Integer> {
 
     public void satisKaydi(Satis satis) {
         Gecmis gecmis = new Gecmis();
-        gecmis.setUrunId(satis.getUrunID());
+        gecmis.setUrunId(satis.getUrunId());
         gecmis.setSatisFiyati(satis.getSatisFiyati());
         gecmis.setSatisTarihi(satis.getSatisTarihi());
 

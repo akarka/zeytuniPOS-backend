@@ -11,9 +11,6 @@ public class Birim {
     @Column(name = "BirimID")
     private Long id;
 
-    @Column(name = "BirimAdi", nullable = false, length = 50)
-    private String ad;
-
     public Long getId() {
         return id;
     }
@@ -22,6 +19,9 @@ public class Birim {
         this.id = id;
     }
 
+    @Column(name = "BirimAdi", nullable = false, length = 50)
+    private String ad;
+
     public String getAd() {
         return ad;
     }
@@ -29,4 +29,5 @@ public class Birim {
     public void setAd(String ad) {
         this.ad = ad;
     }
+
 }

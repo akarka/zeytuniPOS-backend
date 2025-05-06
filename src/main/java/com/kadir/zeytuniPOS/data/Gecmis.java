@@ -11,15 +11,6 @@ public class Gecmis {
     @Column(name = "GecmisFiyatID")
     private Integer id;
 
-    @Column(name = "UrunID", nullable = false, length = 50)
-    private Integer urunId;
-
-    @Column(name = "SatisFiyati", nullable = false, length = 50)
-    private Integer satisFiyati;
-
-    @Column(name = "Tarih", nullable = true, length = 8)
-    private java.sql.Timestamp SatisTarihi;
-
     public Integer getId() {
         return id;
     }
@@ -27,6 +18,9 @@ public class Gecmis {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    @Column(name = "UrunID", nullable = false, length = 50)
+    private Integer urunId;
 
     public Integer getUrunId() {
         return urunId;
@@ -36,6 +30,9 @@ public class Gecmis {
         this.urunId = urunId;
     }
 
+    @Column(name = "SatisFiyati", nullable = false, length = 50)
+    private Integer satisFiyati;
+
     public Integer getSatisFiyati() {
         return satisFiyati;
     }
@@ -43,6 +40,9 @@ public class Gecmis {
     public void setSatisFiyati(Integer satisFiyati) {
         this.satisFiyati = satisFiyati;
     }
+
+    @Column(name = "Tarih", nullable = true, length = 8)
+    private java.sql.Timestamp SatisTarihi;
 
     public java.sql.Timestamp getSatisTarihi() {
         return SatisTarihi;

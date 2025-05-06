@@ -13,25 +13,6 @@ public class IslemLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer logId;
 
-    @ManyToOne
-    @JoinColumn(name = "KullaniciID", nullable = false)
-    private Kullanici kullanici;
-
-    @Column(nullable = false)
-    private Timestamp tarih = Timestamp.valueOf(LocalDateTime.now());
-
-    @Column(nullable = false)
-    private String islemTuru;
-
-    @Column(nullable = false)
-    private String hedefTablo;
-
-    @Column(nullable = false)
-    private Integer hedefId;
-
-    @Column(nullable = false)
-    private String aciklama;
-
     public Integer getLogId() {
         return logId;
     }
@@ -39,6 +20,10 @@ public class IslemLog {
     public void setLogId(Integer logId) {
         this.logId = logId;
     }
+
+    @ManyToOne
+    @JoinColumn(name = "KullaniciID", nullable = false)
+    private Kullanici kullanici;
 
     public Kullanici getKullanici() {
         return kullanici;
@@ -48,6 +33,9 @@ public class IslemLog {
         this.kullanici = kullanici;
     }
 
+    @Column(nullable = false)
+    private Timestamp tarih = Timestamp.valueOf(LocalDateTime.now());
+
     public Timestamp getTarih() {
         return tarih;
     }
@@ -55,6 +43,9 @@ public class IslemLog {
     public void setTarih(Timestamp tarih) {
         this.tarih = tarih;
     }
+
+    @Column(nullable = false)
+    private String islemTuru;
 
     public String getIslemTuru() {
         return islemTuru;
@@ -64,6 +55,9 @@ public class IslemLog {
         this.islemTuru = islemTuru;
     }
 
+    @Column(nullable = false)
+    private String hedefTablo;
+
     public String getHedefTablo() {
         return hedefTablo;
     }
@@ -72,6 +66,9 @@ public class IslemLog {
         this.hedefTablo = hedefTablo;
     }
 
+    @Column(nullable = false)
+    private Integer hedefId;
+
     public Integer getHedefId() {
         return hedefId;
     }
@@ -79,6 +76,9 @@ public class IslemLog {
     public void setHedefId(Integer hedefId) {
         this.hedefId = hedefId;
     }
+
+    @Column(nullable = true)
+    private String aciklama;
 
     public String getAciklama() {
         return aciklama;
