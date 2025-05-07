@@ -4,27 +4,12 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Urunler")
-public class Urun {
+public class Urun implements Loglanabilir {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UrunID")
     private Integer urunId;
-
-    @Column(name = "UrunAdi", nullable = false, length = 200)
-    private String ad;
-
-    @Column(name = "UrunAciklama", nullable = true, length = 510)
-    private String urunAciklama;
-
-    @Column(name = "AltKategoriID", nullable = false, length = 4)
-    private Integer altId;
-
-    @Column(name = "BirimID", nullable = false, length = 4)
-    private Integer birimId;
-
-    @Column(name = "GuncelSatisFiyati")
-    private java.math.BigDecimal satisFiyati;
 
     public Integer getId() {
         return urunId;
@@ -34,6 +19,9 @@ public class Urun {
         this.urunId = urunId;
     }
 
+    @Column(name = "UrunAdi", nullable = false, length = 200)
+    private String ad;
+
     public String getAd() {
         return ad;
     }
@@ -41,6 +29,9 @@ public class Urun {
     public void setAd(String ad) {
         this.ad = ad;
     }
+
+    @Column(name = "UrunAciklama", nullable = true, length = 510)
+    private String urunAciklama;
 
     public String getUrunAciklama() {
         return urunAciklama;
@@ -50,6 +41,9 @@ public class Urun {
         this.urunAciklama = urunAciklama;
     }
 
+    @Column(name = "AltKategoriID", nullable = false, length = 4)
+    private Integer altId;
+
     public Integer getAltId() {
         return altId;
     }
@@ -57,6 +51,9 @@ public class Urun {
     public void setAltId(Integer altId) {
         this.altId = altId;
     }
+
+    @Column(name = "BirimID", nullable = false, length = 4)
+    private Integer birimId;
 
     public Integer getBirimId() {
         return birimId;
@@ -66,11 +63,25 @@ public class Urun {
         this.birimId = birimId;
     }
 
+    @Column(name = "GuncelSatisFiyati")
+    private java.math.BigDecimal satisFiyati;
+
     public java.math.BigDecimal getSatisFiyati() {
         return satisFiyati;
     }
 
     public void setSatisFiyati(java.math.BigDecimal satisFiyati) {
         this.satisFiyati = satisFiyati;
+    }
+
+    // LOGLAMA //
+    @Override
+    public Integer getHedefId() {
+        return this.urunId;
+    }
+
+    @Override
+    public String getHedefTablo() {
+        return "Urunler";
     }
 }
