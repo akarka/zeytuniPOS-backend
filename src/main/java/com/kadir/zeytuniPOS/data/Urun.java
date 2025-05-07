@@ -1,5 +1,7 @@
 package com.kadir.zeytuniPOS.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -76,11 +78,13 @@ public class Urun implements Loglanabilir {
 
     // LOGLAMA //
     @Override
+    @JsonIgnore
     public Integer getHedefId() {
         return this.urunId;
     }
 
     @Override
+    @JsonIgnore
     public String getHedefTablo() {
         return "Urunler";
     }

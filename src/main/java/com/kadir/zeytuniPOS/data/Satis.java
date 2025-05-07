@@ -1,5 +1,7 @@
 package com.kadir.zeytuniPOS.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -65,11 +67,13 @@ public class Satis implements Loglanabilir {
 
     // LOGLAMA //
     @Override
+    @JsonIgnore
     public Integer getHedefId() {
         return this.id;
     }
 
     @Override
+    @JsonIgnore
     public String getHedefTablo() {
         return "Satislar";
     }
