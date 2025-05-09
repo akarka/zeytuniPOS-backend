@@ -8,7 +8,9 @@ import com.kadir.zeytuniPOS.data.IslemLog;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.*;
 
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,6 +24,10 @@ public class IslemLogService extends AbstractService<IslemLog, Integer> {
         this.repository = repository;
         this.kulRepo = kulRepo;
     }
+
+    public List<IslemLog> getAll(Sort sort) {
+    return repository.findAll(sort);
+}
 
     public void logger(Integer kullaniciId, Loglanabilir entity, String islemTuru) {
         IslemLog logger = new IslemLog();
@@ -37,5 +43,7 @@ public class IslemLogService extends AbstractService<IslemLog, Integer> {
 
         repository.save(logger);
     }
+
+
 
 }
