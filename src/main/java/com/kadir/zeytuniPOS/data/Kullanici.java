@@ -2,28 +2,17 @@ package com.kadir.zeytuniPOS.data;
 
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Kullanicilar")
-public class Kullanici {
+public class Kullanici implements Loglanabilir {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer kullaniciId;
-
-    @Column(nullable = false, unique = true)
-    private String kullaniciAdi;
-
-    @Column(nullable = false)
-    private String sifreHash;
-
-    @Column(nullable = false)
-    private boolean aktif = true;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "KullaniciRolleri", joinColumns = @JoinColumn(name = "KullaniciID"), inverseJoinColumns = @JoinColumn(name = "RolID"))
-    private Set<Rol> roller = new HashSet<>();
 
     public Integer getKullaniciId() {
         return kullaniciId;
@@ -33,6 +22,9 @@ public class Kullanici {
         this.kullaniciId = kullaniciId;
     }
 
+    @Column(nullable = false, unique = true)
+    private String kullaniciAdi;
+
     public String getKullaniciAdi() {
         return kullaniciAdi;
     }
@@ -40,6 +32,9 @@ public class Kullanici {
     public void setKullaniciAdi(String kullaniciAdi) {
         this.kullaniciAdi = kullaniciAdi;
     }
+
+    @Column(nullable = false)
+    private String sifreHash;
 
     public String getSifreHash() {
         return sifreHash;
@@ -49,6 +44,9 @@ public class Kullanici {
         this.sifreHash = sifreHash;
     }
 
+    @Column(nullable = false)
+    private boolean aktif = true;
+
     public boolean isAktif() {
         return aktif;
     }
@@ -57,12 +55,29 @@ public class Kullanici {
         this.aktif = aktif;
     }
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "KullaniciRolleri", joinColumns = @JoinColumn(name = "KullaniciID"), inverseJoinColumns = @JoinColumn(name = "RolID"))
+    private Set<Rol> roller = new HashSet<>();
+
     public Set<Rol> getRoller() {
         return roller;
     }
 
     public void setRoller(Set<Rol> roller) {
         this.roller = roller;
+    }
+
+    // LOGLAMA //
+    @Override
+    @JsonIgnore
+    public Integer getHedefId() {
+        return this.kullaniciId;
+    }
+
+    @Override
+    @JsonIgnore
+    public String getHedefTablo() {
+        return "Kullanicilar";
     }
 
 }
