@@ -1,5 +1,8 @@
 package com.kadir.zeytuniPOS.data;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
@@ -32,37 +35,38 @@ public class Envanter implements Loglanabilir {
         this.urunId = urunId;
     }
 
-    @Column(nullable = false)
-    private Integer tedarikciId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TedarikciID", nullable = false)
+    private Tedarikci tedarikci;
 
-    public Integer getTedarikciId() {
-        return tedarikciId;
+    public Tedarikci getTedarikci() {
+        return tedarikci;
     }
 
-    public void setTedarikciId(Integer tedarikciId) {
-        this.tedarikciId = tedarikciId;
-    }
-
-    @Column(name = "BirimID", nullable = false)
-    private Long birimId;
-
-    public Long getId() {
-        return birimId;
-    }
-
-    public void setbirimId(Long birimId) {
-        this.birimId = birimId;
+    public void setTedarikci(Tedarikci tedarikci) {
+        this.tedarikci = tedarikci;
     }
 
     @Column(nullable = true)
     private Integer stokMiktari;
 
-    public Integer getStokmiktar() {
+    public Integer getStokMiktari() {
         return stokMiktari;
     }
 
-    public void setStokmiktar(Integer stokMiktari) {
+    public void setStokMiktari(Integer stokMiktari) {
         this.stokMiktari = stokMiktari;
+    }
+
+    @Column(nullable = false)
+    private Timestamp girisTarihi = Timestamp.valueOf(LocalDateTime.now());
+
+    public Timestamp getGirisTarihi() {
+        return girisTarihi;
+    }
+
+    public void setGirisTarihi(Timestamp girisTarihi) {
+        this.girisTarihi = girisTarihi;
     }
 
     // LOGLAMA //
