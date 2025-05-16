@@ -17,8 +17,8 @@ public class TedarikciService extends AbstractService<Tedarikci, Integer> {
                 .orElseThrow(() -> new RuntimeException("Tedarikci bulunamadı: ID = " + id));
     }
 
-    public Tedarikci update(Integer id, Tedarikci guncelTedarikci) {
-        Tedarikci mevcutTedarikci = repository.findById(id)
+    public Tedarikci update(Integer tedarikciId, Tedarikci guncelTedarikci) {
+        Tedarikci mevcutTedarikci = repository.findById(tedarikciId)
                 .orElseThrow(() -> new RuntimeException("Tedarikci bulunamadi."));
 
         mevcutTedarikci.setTedarikciAdi(guncelTedarikci.getTedarikciAdi());

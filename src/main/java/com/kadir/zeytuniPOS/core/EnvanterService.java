@@ -34,15 +34,15 @@ public class EnvanterService extends AbstractService<Envanter, Integer> {
         repository.save(envanter);
     }
 
-    public void stokCik(Integer urunId, Integer miktar, Tedarikci tedarikci) {
+    public void stokCik(Integer urunId, Integer stokMiktari, Tedarikci tedarikci) {
         Envanter envanter = repository.findByUrunIdAndTedarikci(urunId, tedarikci)
                 .orElseThrow(() -> new RuntimeException("Stok bulunamadı"));
 
-        if (envanter.getStokMiktari() < miktar) {
+        if (envanter.getStokMiktari() < stokMiktari) {
             throw new RuntimeException("Yetersiz stok");
         }
 
-        envanter.setStokMiktari(envanter.getStokMiktari() - miktar);
+        envanter.setStokMiktari(envanter.getStokMiktari() - stokMiktari);
         envanter.setGirisTarihi(Timestamp.valueOf(LocalDateTime.now()));
         repository.save(envanter);
     }

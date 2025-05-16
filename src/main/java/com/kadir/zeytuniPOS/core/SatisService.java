@@ -28,9 +28,9 @@ public class SatisService extends AbstractService<Satis, Integer> {
         return repository.findAll();
     }
 
-    public Satis getById(Integer id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Satış bulunamadı: ID = " + id));
+    public Satis getById(Integer satisId) {
+        return repository.findById(satisId)
+                .orElseThrow(() -> new RuntimeException("Satış bulunamadı: ID = " + satisId));
     }
 
     public void delete(Integer id) {
@@ -48,8 +48,8 @@ public class SatisService extends AbstractService<Satis, Integer> {
         return kayit;
     }
 
-    public Satis update(Integer id, Satis guncelSatis) {
-        Satis mevcutSatis = repository.findById(id).orElseThrow(() -> new RuntimeException("Satis bulunamadi."));
+    public Satis update(Integer satisId, Satis guncelSatis) {
+        Satis mevcutSatis = repository.findById(satisId).orElseThrow(() -> new RuntimeException("Satis bulunamadi."));
 
         mevcutSatis.setUrunId(guncelSatis.getUrunId());
         mevcutSatis.setMiktar(guncelSatis.getMiktar());

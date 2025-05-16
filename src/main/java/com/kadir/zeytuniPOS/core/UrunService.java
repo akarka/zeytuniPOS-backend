@@ -20,8 +20,8 @@ public class UrunService extends AbstractService<Urun, Integer>{
         return repository.save(urun);
     }
 
-    public void delete(Integer id) {
-        repository.deleteById(id);
+    public void delete(Integer urunId) {
+        repository.deleteById(urunId);
     }
 
     public List<Urun> getAll() {
@@ -34,7 +34,7 @@ public class UrunService extends AbstractService<Urun, Integer>{
 
     public Urun update(Integer urunId, Urun guncel) {
         Urun mevcut = repository.findById(urunId).orElseThrow(() -> new RuntimeException("Geçersiz ürün ID."));
-        mevcut.setAd(guncel.getAd());
+        mevcut.setUrunAdi(guncel.getUrunAdi());
         mevcut.setUrunAciklama(guncel.getUrunAciklama());
         mevcut.setAltId(guncel.getAltId());
         mevcut.setBirimId(guncel.getBirimId());

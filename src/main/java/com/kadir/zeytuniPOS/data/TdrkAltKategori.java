@@ -37,14 +37,14 @@ public class TdrkAltKategori {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "AltKategoriID", nullable = false)
     @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-    private AltKategori id;
+    private AltKategori altkId;
 
-    public AltKategori getId() {
-        return id;
+    public AltKategori getAltkId() {
+        return altkId;
     }
 
-    public void setId(AltKategori id) {
-        this.id = id;
+    public void setAltkId(AltKategori altkId) {
+        this.altkId = altkId;
     }
 
 }

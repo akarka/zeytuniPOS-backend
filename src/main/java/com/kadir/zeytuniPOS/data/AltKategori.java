@@ -9,25 +9,25 @@ public class AltKategori {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "AltKategoriID", nullable = false, length = 50)
-    private Integer id;
+    private Integer altkId;
 
-    public Integer getId() {
-        return id;
+    public Integer getAltkId() {
+        return altkId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setAltkId(Integer altkId) {
+        this.altkId = altkId;
     }
 
     @Column(name = "AltKategoriAdi", nullable = false, length = 50)
-    public String ad;
+    public String altkAdi;
 
-    public String getAd() {
-        return ad;
+    public String getAltkAdi() {
+        return altkAdi;
     }
 
-    public void setAd(String ad) {
-        this.ad = ad;
+    public void setAltkAdi(String altkAdi) {
+        this.altkAdi = altkAdi;
     }
 
     @Column(name = "UrunKategoriID", nullable = false, length = 50)

@@ -9,14 +9,14 @@ public class Gecmis {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "GecmisFiyatID")
-    private Integer id;
+    private Integer gecmisId;
 
-    public Integer getId() {
-        return id;
+    public Integer getGecmisId() {
+        return gecmisId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setGecmisId(Integer gecmisId) {
+        this.gecmisId = gecmisId;
     }
 
     @Column(name = "UrunID", nullable = false, length = 50)

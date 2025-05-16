@@ -11,14 +11,14 @@ public class Satis implements Loglanabilir {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "SatisID")
-    private Integer id;
+    private Integer satisId;
 
-    public Integer getId() {
-        return id;
+    public Integer getSatisId() {
+        return satisId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setSatisId(Integer satisId) {
+        this.satisId = satisId;
     }
 
     @Column(name = "UrunID", nullable = false, length = 50)
@@ -69,7 +69,7 @@ public class Satis implements Loglanabilir {
     @Override
     @JsonIgnore
     public Integer getHedefId() {
-        return this.id;
+        return this.satisId;
     }
 
     @Override

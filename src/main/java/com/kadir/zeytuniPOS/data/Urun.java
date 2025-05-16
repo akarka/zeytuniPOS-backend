@@ -22,14 +22,14 @@ public class Urun implements Loglanabilir {
     }
 
     @Column(name = "UrunAdi", nullable = false, length = 200)
-    private String ad;
+    private String urunAdi;
 
-    public String getAd() {
-        return ad;
+    public String getUrunAdi() {
+        return urunAdi;
     }
 
-    public void setAd(String ad) {
-        this.ad = ad;
+    public void setUrunAdi(String urunAdi) {
+        this.urunAdi = urunAdi;
     }
 
     @Column(name = "UrunAciklama", nullable = true, length = 510)
