@@ -42,8 +42,12 @@ public class EnvanterController {
         }
     }
 
-    @GetMapping("/stok/{urunId}")
-    public double stokSorgula(@PathVariable Integer urunId, @PathVariable Tedarikci tedarikci) {
+    @GetMapping("/stok/{urunId}/{tedarikciId}")
+    public double stokSorgula(@PathVariable Integer urunId, @PathVariable Integer tedarikciId) {
+        Tedarikci tedarikci = tedarikciRepository.findById(tedarikciId)
+                .orElseThrow(() -> new RuntimeException("Tedarikçi bulunamadı"));
+
         return envanterService.stokSorgula(urunId, tedarikci);
     }
+
 }
