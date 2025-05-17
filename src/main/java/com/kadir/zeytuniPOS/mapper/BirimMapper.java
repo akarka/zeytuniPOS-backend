@@ -17,6 +17,7 @@ public interface BirimMapper {
     @Mapping(target = "birimId", ignore = true)
     Birim toEntity(BirimCreateDTO dto);
 
+    @Mapping(target = "birimId", ignore = true)
     Birim toEntity(BirimUpdateDTO dto);
 
 }

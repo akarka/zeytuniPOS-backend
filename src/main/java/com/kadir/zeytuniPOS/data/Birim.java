@@ -1,10 +1,12 @@
 package com.kadir.zeytuniPOS.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Birimler")
-public class Birim {
+public class Birim implements Loglanabilir {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +30,19 @@ public class Birim {
 
     public void setBirimAdi(String birimAdi) {
         this.birimAdi = birimAdi;
+    }
+
+    // LOGLAMA //
+    @Override
+    @JsonIgnore
+    public Integer getHedefId() {
+        return birimId.intValue();
+    }
+
+    @Override
+    @JsonIgnore
+    public String getHedefTablo() {
+        return "UrunKategori";
     }
 
 }
