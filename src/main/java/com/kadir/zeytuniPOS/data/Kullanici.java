@@ -55,16 +55,16 @@ public class Kullanici implements Loglanabilir {
         this.aktif = aktif;
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "KullaniciRolleri", joinColumns = @JoinColumn(name = "KullaniciID"), inverseJoinColumns = @JoinColumn(name = "RolID"))
-    private Set<Rol> roller = new HashSet<>();
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "RolID", nullable = false)
+    private Rol rol;
 
-    public Set<Rol> getRoller() {
-        return roller;
+    public Rol getRol() {
+        return rol;
     }
 
-    public void setRoller(Set<Rol> roller) {
-        this.roller = roller;
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     // LOGLAMA //

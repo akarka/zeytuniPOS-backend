@@ -1,25 +1,11 @@
-package com.kadir.zeytuniPOS.data;
+package com.kadir.zeytuniPOS.dto;
 
-import jakarta.persistence.*;
 import java.sql.Timestamp;
 
-@Entity
-@Table(name = "GecmisFiyatlar")
-public class Gecmis {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "GecmisFiyatID")
+public class GecmisFiyatDTO {
     private Integer gecmisId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "UrunID", nullable = false)
-    private Urun urun;
-
-    @Column(name = "SatisFiyati", nullable = false)
+    private String urunAdi;
     private Integer satisFiyati;
-
-    @Column(name = "Tarih")
     private Timestamp satisTarihi;
 
     public Integer getGecmisId() {
@@ -30,12 +16,12 @@ public class Gecmis {
         this.gecmisId = gecmisId;
     }
 
-    public Urun getUrun() {
-        return urun;
+    public String getUrunAdi() {
+        return urunAdi;
     }
 
-    public void setUrun(Urun urun) {
-        this.urun = urun;
+    public void setUrunAdi(String urunAdi) {
+        this.urunAdi = urunAdi;
     }
 
     public Integer getSatisFiyati() {
@@ -53,4 +39,5 @@ public class Gecmis {
     public void setSatisTarihi(Timestamp satisTarihi) {
         this.satisTarihi = satisTarihi;
     }
+
 }

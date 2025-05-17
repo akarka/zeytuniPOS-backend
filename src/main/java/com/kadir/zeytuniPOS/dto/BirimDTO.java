@@ -1,22 +1,22 @@
 package com.kadir.zeytuniPOS.dto;
 
-
-
 public class BirimDTO {
+    private Integer birimId;
+    private String birimAdi;
 
-    private Integer id;
-    public Integer getid() {
-        return id;
-    }
-    public void setid(Integer id) {
-        this.id = id;
+    public Integer getBirimId() {
+        return birimId;
     }
 
-    private String ad;
-    public String getad() {
-        return ad;
+    public void setBirimId(Integer birimId) {
+        this.birimId = birimId;
     }
-    public void setad(String ad) {
-        this.ad = ad;
+
+    public String getBirimAdi() {
+        return birimAdi;
+    }
+
+    public void setBirimAdi(String birimAdi) {
+        this.birimAdi = birimAdi;
     }
 }

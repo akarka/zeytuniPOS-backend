@@ -2,6 +2,7 @@ package com.kadir.zeytuniPOS.api;
 
 import com.kadir.zeytuniPOS.core.SatisService;
 import com.kadir.zeytuniPOS.data.Satis;
+import com.kadir.zeytuniPOS.data.Urun;
 import com.kadir.zeytuniPOS.core.IslemLogService;
 import com.kadir.zeytuniPOS.core.GecmisService;
 import com.kadir.zeytuniPOS.data.Gecmis;
@@ -29,17 +30,22 @@ public class SatisController extends BaseController<Satis, Integer> {
     public List<Satis> getByUrunId(@PathVariable Integer urunId) {
         return satisService.getByUrunId(urunId);
     }
-    
+
     @Override
     @PostMapping
     public Satis create(@RequestBody Satis satis) {
         Satis kayit = satisService.create(satis);
-        islemLogService.logger(1, kayit, "CREATE"); // loglama - sabit kullanıcı
+        islemLogService.logger(1, kayit, "CREATE");
 
-        Gecmis gecmis = new Gecmis(); // geçmiş fiyat kaydı
-        gecmis.setUrunId(kayit.getUrunId());
+        Gecmis gecmis = new Gecmis();
+
+        Urun urun = new Urun();
+        urun.setUrunId(kayit.getUrunId());
+        gecmis.setUrun(urun);
+
         gecmis.setSatisFiyati(kayit.getSatisFiyati());
         gecmis.setSatisTarihi(kayit.getSatisTarihi());
+
         gecmisService.create(gecmis);
 
         return kayit;

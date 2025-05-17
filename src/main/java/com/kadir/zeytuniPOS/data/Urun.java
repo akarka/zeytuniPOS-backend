@@ -13,11 +13,11 @@ public class Urun implements Loglanabilir {
     @Column(name = "UrunID")
     private Integer urunId;
 
-    public Integer getId() {
+    public Integer getUrunId() {
         return urunId;
     }
 
-    public void setId(Integer urunId) {
+    public void setUrunId(Integer urunId) {
         this.urunId = urunId;
     }
 

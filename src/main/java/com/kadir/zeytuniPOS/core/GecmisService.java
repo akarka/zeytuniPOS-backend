@@ -3,6 +3,7 @@ package com.kadir.zeytuniPOS.core;
 import com.kadir.zeytuniPOS.data.Gecmis;
 import com.kadir.zeytuniPOS.data.GecmisRepository;
 import com.kadir.zeytuniPOS.data.Satis;
+import com.kadir.zeytuniPOS.data.Urun;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -23,7 +24,11 @@ public class GecmisService extends AbstractService<Gecmis, Integer> {
 
     public void satisKaydi(Satis satis) {
         Gecmis gecmis = new Gecmis();
-        gecmis.setUrunId(satis.getUrunId());
+
+        Urun urun = new Urun();
+        urun.setUrunId(satis.getUrunId());
+
+        gecmis.setUrun(urun);
         gecmis.setSatisFiyati(satis.getSatisFiyati());
         gecmis.setSatisTarihi(satis.getSatisTarihi());
 
