@@ -19,7 +19,7 @@ public class Birim {
         this.birimId = birimId;
     }
 
-    @Column(name = "BirimAdi", nullable = false, length = 50)
+    @Column(name = "BirimAdi", nullable = false, length = 50, unique = true)
     private String birimAdi;
 
     public String getBirimAdi() {
