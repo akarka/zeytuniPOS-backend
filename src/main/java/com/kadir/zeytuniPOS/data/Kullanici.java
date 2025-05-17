@@ -1,7 +1,5 @@
 package com.kadir.zeytuniPOS.data;
 
-import java.util.*;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;

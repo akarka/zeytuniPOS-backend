@@ -44,14 +44,14 @@ public class Urun implements Loglanabilir {
     }
 
     @Column(name = "AltKategoriID", nullable = false, length = 4)
-    private Integer altId;
+    private Integer altkId;
 
-    public Integer getAltId() {
-        return altId;
+    public Integer getAltkId() {
+        return altkId;
     }
 
-    public void setAltId(Integer altId) {
-        this.altId = altId;
+    public void setAltId(Integer altkId) {
+        this.altkId = altkId;
     }
 
     @Column(name = "BirimID", nullable = false, length = 4)

@@ -8,7 +8,7 @@ public class UrunKategoriDTO {
         return urunKategoriId;
     }
 
-    public void setKategoriId(Integer urunKategoriId) {
+    public void setUrunKategoriId(Integer urunKategoriId) {
         this.urunKategoriId = urunKategoriId;
     }
 

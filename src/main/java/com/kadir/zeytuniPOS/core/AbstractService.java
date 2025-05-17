@@ -2,6 +2,8 @@ package com.kadir.zeytuniPOS.core;
 
 import com.kadir.zeytuniPOS.data.BaseRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 import java.util.List;
 
 public abstract class AbstractService<T, ID> implements BaseService<T, ID> {
@@ -30,5 +32,10 @@ public abstract class AbstractService<T, ID> implements BaseService<T, ID> {
     @Override
     public void delete(ID id) {
         repository.deleteById(id);
+    }
+
+    public T getById(ID id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("ID bulunamadı: " + id));
     }
 }

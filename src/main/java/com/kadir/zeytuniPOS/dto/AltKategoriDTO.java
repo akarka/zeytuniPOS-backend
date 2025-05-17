@@ -3,7 +3,7 @@ package com.kadir.zeytuniPOS.dto;
 public class AltKategoriDTO {
     private Integer altkId;
     private String altkAdi;
-    private String kategoriID;
+    private String urunKategoriId;
 
     public Integer getAltkId() {
         return altkId;
@@ -21,11 +21,11 @@ public class AltKategoriDTO {
         this.altkAdi = altkAdi;
     }
 
-    public String getKategoriID() {
-        return kategoriID;
+    public String getUrunKategoriId() {
+        return urunKategoriId;
     }
 
-    public void setKategoriID(String kategoriID) {
-        this.kategoriID = kategoriID;
+    public void setUrunKategoriId(String urunKategoriId) {
+        this.urunKategoriId = urunKategoriId;
     }
 }

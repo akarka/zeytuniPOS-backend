@@ -31,14 +31,14 @@ public class AltKategori {
     }
 
     @Column(name = "UrunKategoriID", nullable = false, length = 50)
-    public String kategoriID;
+    public String urunKategoriId;
 
-    public String getKategoriID() {
-        return kategoriID;
+    public String getUrunKategoriId() {
+        return urunKategoriId;
     }
 
-    public void setKategoriID(String kategoriID) {
-        this.kategoriID = kategoriID;
+    public void setUrunKategoriId(String urunKategoriId) {
+        this.urunKategoriId = urunKategoriId;
     }
 
 }
