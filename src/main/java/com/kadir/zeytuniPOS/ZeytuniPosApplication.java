@@ -9,7 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
 		"com.kadir.zeytuniPOS.mapper", // Mapper'lar
 		"com.kadir.zeytuniPOS.core", // Servisler
 		"com.kadir.zeytuniPOS.api", // Controller'lar
-		"com.kadir.zeytuniPOS.data" // Entity/repository
+		"com.kadir.zeytuniPOS.data", // Entity/repository
+		"com.kadir.zeytuniPOS.dto" // DTO'lar
 })
 public class ZeytuniPosApplication {
 
