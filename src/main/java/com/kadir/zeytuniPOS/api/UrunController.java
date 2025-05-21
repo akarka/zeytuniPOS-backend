@@ -24,7 +24,7 @@ public class UrunController extends BaseController<Urun, Integer> {
         return service.getAllDTO();
     }
 
-    @PostMapping("/dto") // ❗ dikkat: /dto
+    @PostMapping("/dto")
     public UrunDTO create(@RequestBody UrunCreateDTO dto) {
         return service.createFromDTO(dto);
     }
