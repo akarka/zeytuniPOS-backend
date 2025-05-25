@@ -6,10 +6,10 @@ import com.kadir.zeytuniPOS.dto.IslemLogCreateDTO;
 import com.kadir.zeytuniPOS.dto.IslemLogDTO;
 import com.kadir.zeytuniPOS.dto.IslemLogUpdateDTO;
 import com.kadir.zeytuniPOS.mapper.IslemLogMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,14 +27,16 @@ public class IslemLogService extends AbstractService<IslemLog, Integer> {
     }
 
     public IslemLogDTO createIslemLog(IslemLogCreateDTO createDTO) {
+        if (createDTO.getTarih() == null) {
+            createDTO.setTarih(LocalDateTime.now());
+        }
         IslemLog entity = islemLogMapper.toEntity(createDTO);
-        IslemLog savedEntity = islemLogRepository.save(entity);
-        return islemLogMapper.toDTO(savedEntity);
+        IslemLog saved = islemLogRepository.save(entity);
+        return islemLogMapper.toDTO(saved);
     }
 
     public List<IslemLogDTO> getAllIslemLogs() {
-        List<IslemLog> entities = islemLogRepository.findAll();
-        return islemLogMapper.toDTOList(entities);
+        return islemLogMapper.toDTOList(islemLogRepository.findAll());
     }
 
     public IslemLogDTO getIslemLogById(Integer id) {
@@ -43,15 +45,10 @@ public class IslemLogService extends AbstractService<IslemLog, Integer> {
     }
 
     public IslemLogDTO updateIslemLog(Integer id, IslemLogUpdateDTO updateDTO) {
-
-        getById(id);
-
-        IslemLog entity = islemLogMapper.toEntity(updateDTO);
-        IslemLog updatedEntity = islemLogRepository.save(entity);
-        return islemLogMapper.toDTO(updatedEntity);
+        IslemLog existing = getById(id);
+        IslemLog updated = islemLogMapper.toEntity(updateDTO);
+        updated.setLogId(existing.getLogId());
+        return islemLogMapper.toDTO(islemLogRepository.save(updated));
     }
 
-    public void deleteIslemLog(Integer id) {
-        islemLogRepository.deleteById(id);
-    }
 }

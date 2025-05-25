@@ -1,12 +1,10 @@
 package com.kadir.zeytuniPOS.data;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Tedarikciler")
-public class Tedarikci implements Loglanabilir {
+public class Tedarikci {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,19 +49,6 @@ public class Tedarikci implements Loglanabilir {
 
     public void setTedarikciAdres(String tedarikciAdres) {
         this.tedarikciAdres = tedarikciAdres;
-    }
-
-    // LOGLAMA //
-    @Override
-    @JsonIgnore
-    public Integer getHedefId() {
-        return this.tedarikciId;
-    }
-
-    @Override
-    @JsonIgnore
-    public String getHedefTablo() {
-        return "Tedarikciler";
     }
 
 }

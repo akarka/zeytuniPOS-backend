@@ -43,8 +43,4 @@ public class IslemLogController extends BaseController<IslemLog, Integer> {
         return islemLogService.updateIslemLog(updateDTO.getLogId(), updateDTO);
     }
 
-    @DeleteMapping("/dto/{id}")
-    public void delete(@PathVariable Integer id) {
-        islemLogService.deleteIslemLog(id);
-    }
 }

@@ -1,35 +1,18 @@
-package com.kadir.zeytuniPOS.data;
+package com.kadir.zeytuniPOS.dto;
 
-import jakarta.persistence.*;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "Urunler")
-public class Urun {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "UrunID")
+public class UrunDTOUpdate {
     private Integer urunId;
-
-    @Column(name = "UrunAdi", nullable = false)
     private String urunAdi;
-
-    @Column(name = "UrunAciklama")
     private String urunAciklama;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "AltKategoriID")
-    private AltKategori altKategori;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "BirimID")
-    private Birim birim;
-
-    @Column(name = "GuncelSatisFiyati")
+    private Integer altKategoriId;
+    private Integer birimId;
     private BigDecimal guncelSatisFiyati;
-
-    @Column(name = "Notlar")
     private String notlar;
+
+    public UrunDTOUpdate() {
+    }
 
     public Integer getUrunId() {
         return urunId;
@@ -55,20 +38,20 @@ public class Urun {
         this.urunAciklama = urunAciklama;
     }
 
-    public AltKategori getAltKategori() {
-        return altKategori;
+    public Integer getAltKategoriId() {
+        return altKategoriId;
     }
 
-    public void setAltKategori(AltKategori altKategori) {
-        this.altKategori = altKategori;
+    public void setAltKategoriId(Integer altKategoriId) {
+        this.altKategoriId = altKategoriId;
     }
 
-    public Birim getBirim() {
-        return birim;
+    public Integer getBirimId() {
+        return birimId;
     }
 
-    public void setBirim(Birim birim) {
-        this.birim = birim;
+    public void setBirimId(Integer birimId) {
+        this.birimId = birimId;
     }
 
     public BigDecimal getGuncelSatisFiyati() {

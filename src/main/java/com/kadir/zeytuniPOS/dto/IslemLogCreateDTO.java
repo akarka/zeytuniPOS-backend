@@ -3,12 +3,13 @@ package com.kadir.zeytuniPOS.dto;
 import java.time.LocalDateTime;
 
 public class IslemLogCreateDTO {
+
     private Integer kullaniciId;
-    private LocalDateTime tarih;
     private String islemTuru;
     private String hedefTablo;
     private Integer hedefId;
     private String aciklama;
+    private LocalDateTime tarih;
 
     public Integer getKullaniciId() {
         return kullaniciId;
@@ -16,14 +17,6 @@ public class IslemLogCreateDTO {
 
     public void setKullaniciId(Integer kullaniciId) {
         this.kullaniciId = kullaniciId;
-    }
-
-    public LocalDateTime getTarih() {
-        return tarih;
-    }
-
-    public void setTarih(LocalDateTime tarih) {
-        this.tarih = tarih;
     }
 
     public String getIslemTuru() {
@@ -56,5 +49,13 @@ public class IslemLogCreateDTO {
 
     public void setAciklama(String aciklama) {
         this.aciklama = aciklama;
+    }
+
+    public LocalDateTime getTarih() {
+        return tarih;
+    }
+
+    public void setTarih(LocalDateTime tarih) {
+        this.tarih = tarih;
     }
 }

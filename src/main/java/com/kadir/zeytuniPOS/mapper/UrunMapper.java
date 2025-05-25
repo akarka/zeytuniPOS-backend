@@ -2,18 +2,17 @@ package com.kadir.zeytuniPOS.mapper;
 
 import com.kadir.zeytuniPOS.data.*;
 import com.kadir.zeytuniPOS.dto.*;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface UrunMapper {
-
     @Mapping(source = "birim.birimId", target = "birimId")
+    @Mapping(source = "birim.birimAdi", target = "birimAdi")
     @Mapping(source = "altKategori.altkId", target = "altKategoriId")
+    @Mapping(source = "altKategori.altkAdi", target = "altKategoriAdi")
     UrunDTO toDTO(Urun urun);
 
     List<UrunDTO> toDTOList(List<Urun> urunler);
@@ -21,11 +20,11 @@ public interface UrunMapper {
     @Mapping(target = "urunId", ignore = true)
     @Mapping(source = "birimId", target = "birim", qualifiedByName = "mapBirimFromId")
     @Mapping(source = "altKategoriId", target = "altKategori", qualifiedByName = "mapAltKategoriFromId")
-    Urun toEntity(UrunCreateDTO dto);
+    Urun toEntity(UrunDTOCreate dto);
 
     @Mapping(source = "birimId", target = "birim", qualifiedByName = "mapBirimFromId")
     @Mapping(source = "altKategoriId", target = "altKategori", qualifiedByName = "mapAltKategoriFromId")
-    Urun toEntity(UrunUpdateDTO dto);
+    Urun toEntity(UrunDTOUpdate dto);
 
     @Named("mapBirimFromId")
     static Birim mapBirimFromId(Integer id) {
