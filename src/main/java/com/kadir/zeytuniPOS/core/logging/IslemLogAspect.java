@@ -80,6 +80,9 @@ public class IslemLogAspect {
 
             // Kullanıcı ID'sini belirle
             Integer kullaniciId = SecurityUtil.getCurrentUserId();
+            if (kullaniciId == null) {
+                kullaniciId = 2; // varsayılan admin ID
+            }
 
             // Log kaydını oluştur
             IslemLog islemLog = new IslemLog();

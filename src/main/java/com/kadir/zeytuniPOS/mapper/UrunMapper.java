@@ -13,6 +13,7 @@ public interface UrunMapper {
     @Mapping(source = "birim.birimAdi", target = "birimAdi")
     @Mapping(source = "altKategori.altkId", target = "altKategoriId")
     @Mapping(source = "altKategori.altkAdi", target = "altKategoriAdi")
+    @Mapping(source = "guncelSatisFiyati", target = "guncelSatisFiyati")
     UrunDTO toDTO(Urun urun);
 
     List<UrunDTO> toDTOList(List<Urun> urunler);
@@ -20,10 +21,12 @@ public interface UrunMapper {
     @Mapping(target = "urunId", ignore = true)
     @Mapping(source = "birimId", target = "birim", qualifiedByName = "mapBirimFromId")
     @Mapping(source = "altKategoriId", target = "altKategori", qualifiedByName = "mapAltKategoriFromId")
+    @Mapping(source = "guncelSatisFiyati", target = "guncelSatisFiyati")
     Urun toEntity(UrunDTOCreate dto);
 
     @Mapping(source = "birimId", target = "birim", qualifiedByName = "mapBirimFromId")
     @Mapping(source = "altKategoriId", target = "altKategori", qualifiedByName = "mapAltKategoriFromId")
+    @Mapping(source = "guncelSatisFiyati", target = "guncelSatisFiyati")
     Urun toEntity(UrunDTOUpdate dto);
 
     @Named("mapBirimFromId")

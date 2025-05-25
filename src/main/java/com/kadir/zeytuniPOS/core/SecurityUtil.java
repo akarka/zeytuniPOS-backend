@@ -22,7 +22,7 @@ public class SecurityUtil {
      * @return Kullanıcı ID'si, yoksa varsayılan olarak 1
      */
     public static Integer getCurrentUserId() {
-        return currentUserId.get() != null ? currentUserId.get() : 1; // Varsayılan olarak 1
+        return currentUserId.get() != null ? currentUserId.get() : 2; // Varsayılan olarak 1
     }
 
     /**

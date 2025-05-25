@@ -46,6 +46,7 @@ public class UrunService extends AbstractService<Urun, Integer> {
                 .orElseThrow(() -> new EntityNotFoundException("Ürün bulunamadı"));
 
         mevcut.setUrunAdi(dto.getUrunAdi());
+        mevcut.setGuncelSatisFiyati(dto.getGuncelSatisFiyati());
         return mapper.toDTO(repository.save(mevcut));
     }
 

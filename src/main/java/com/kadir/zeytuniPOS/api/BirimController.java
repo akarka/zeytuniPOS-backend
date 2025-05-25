@@ -1,7 +1,6 @@
 package com.kadir.zeytuniPOS.api;
 
 import com.kadir.zeytuniPOS.core.BirimService;
-import com.kadir.zeytuniPOS.core.logging.LogIslem;
 import com.kadir.zeytuniPOS.data.Birim;
 import com.kadir.zeytuniPOS.dto.BirimDTOCreate;
 import com.kadir.zeytuniPOS.dto.BirimDTO;

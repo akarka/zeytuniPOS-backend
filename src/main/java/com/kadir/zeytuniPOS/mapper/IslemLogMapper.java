@@ -27,9 +27,13 @@ public interface IslemLogMapper {
         dto.setHedefTablo(entity.getHedefTablo());
         dto.setHedefId(entity.getHedefId());
         dto.setAciklama(entity.getAciklama());
-        
+
         if (entity.getKullanici() != null) {
             dto.setKullaniciId(entity.getKullanici().getKullaniciId());
+            dto.setKullaniciAdi(
+                    entity.getKullanici().getKullaniciAdi() != null
+                            ? entity.getKullanici().getKullaniciAdi()
+                            : "-");
         }
 
         return dto;

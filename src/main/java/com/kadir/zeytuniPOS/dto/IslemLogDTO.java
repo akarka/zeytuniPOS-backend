@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 public class IslemLogDTO {
     private Integer logId;
     private Integer kullaniciId;
+    private String kullaniciAdi;
     private LocalDateTime tarih;
     private String islemTuru;
     private String hedefTablo;
@@ -25,6 +26,14 @@ public class IslemLogDTO {
 
     public void setKullaniciId(Integer kullaniciId) {
         this.kullaniciId = kullaniciId;
+    }
+
+    public String getKullaniciAdi() {
+        return kullaniciAdi;
+    }
+
+    public void setKullaniciAdi(String kullaniciAdi) {
+        this.kullaniciAdi = kullaniciAdi;
     }
 
     public LocalDateTime getTarih() {

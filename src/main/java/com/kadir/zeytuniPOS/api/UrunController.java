@@ -33,7 +33,7 @@ public class UrunController extends BaseController<Urun, Integer> {
 
     @PostMapping("/dto")
     public UrunDTO create(@RequestBody UrunDTOCreate dto) {
-        SecurityUtil.setCurrentUserId(1); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
+        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
         try {
             return service.createFromDTO(dto);
         } finally {
@@ -43,7 +43,7 @@ public class UrunController extends BaseController<Urun, Integer> {
 
     @PutMapping("/dto")
     public UrunDTO update(@RequestBody UrunDTOUpdate dto) {
-        SecurityUtil.setCurrentUserId(1); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
+        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
         try {
             return service.update(dto);
         } finally {
@@ -53,7 +53,7 @@ public class UrunController extends BaseController<Urun, Integer> {
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
-        SecurityUtil.setCurrentUserId(1); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
+        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
         try {
             service.deleteById(id);
         } finally {
