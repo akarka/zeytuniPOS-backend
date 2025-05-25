@@ -1,10 +1,11 @@
 package com.kadir.zeytuniPOS.api;
 
 import com.kadir.zeytuniPOS.core.BirimService;
+import com.kadir.zeytuniPOS.core.logging.LogIslem;
 import com.kadir.zeytuniPOS.data.Birim;
-import com.kadir.zeytuniPOS.dto.BirimCreateDTO;
+import com.kadir.zeytuniPOS.dto.BirimDTOCreate;
 import com.kadir.zeytuniPOS.dto.BirimDTO;
-import com.kadir.zeytuniPOS.dto.BirimUpdateDTO;
+import com.kadir.zeytuniPOS.dto.BirimDTOUpdate;
 
 import java.util.List;
 
@@ -27,17 +28,18 @@ public class BirimController extends BaseController<Birim, Integer> {
     }
 
     @PostMapping("/dto")
-    public BirimDTO create(@RequestBody BirimCreateDTO dto) {
+    public BirimDTO create(@RequestBody BirimDTOCreate dto) {
         return service.createFromDTO(dto);
     }
 
-    @DeleteMapping("/by-adi/{birimAdi}")
-    public void deleteByAdi(@PathVariable String birimAdi) {
-        service.deleteByBirimAdi(birimAdi);
+    @Override
+    @DeleteMapping("/{id}")
+    public void delete(Integer id) {
+        service.deleteById(id);
     }
 
     @PutMapping("/dto")
-    public BirimDTO update(@RequestBody BirimUpdateDTO dto) {
+    public BirimDTO update(@RequestBody BirimDTOUpdate dto) {
         return service.update(dto);
     }
 }

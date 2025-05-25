@@ -8,6 +8,7 @@ import com.kadir.zeytuniPOS.mapper.UrunMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -35,32 +36,22 @@ public class UrunService extends AbstractService<Urun, Integer> {
     @LogIslem(islemTuru = "CREATE", hedefTablo = "Urunler", aciklama = "Yeni ürün eklendi")
     public UrunDTO createFromDTO(UrunDTOCreate dto) {
         Urun entity = mapper.toEntity(dto);
-        Urun saved = repository.save(entity);
-        return mapper.toDTO(saved);
+        return mapper.toDTO(repository.save(entity));
     }
 
     @LogIslem(islemTuru = "UPDATE", hedefTablo = "Urunler", aciklama = "Ürün güncellendi")
     public UrunDTO update(UrunDTOUpdate dto) {
-        // ID kontrolü
-        getById(dto.getUrunId());
 
-        Urun updated = repository.save(mapper.toEntity(dto));
-        return mapper.toDTO(updated);
+        Urun mevcut = repository.findById(dto.getUrunId())
+                .orElseThrow(() -> new EntityNotFoundException("Ürün bulunamadı"));
+
+        mevcut.setUrunAdi(dto.getUrunAdi());
+        return mapper.toDTO(repository.save(mevcut));
     }
 
     @LogIslem(islemTuru = "DELETE", hedefTablo = "Urunler", aciklama = "Ürün silindi")
-    public void deleteWithDTO(UrunDTODelete deleteDTO) {
-        // Onay kodu kontrolü
-        if (deleteDTO.getOnayKodu() != null && !deleteDTO.getOnayKodu().equals("ONAYLA")) {
-            throw new RuntimeException("Geçersiz onay kodu. Silme işlemi için 'ONAYLA' yazmalısınız.");
-        }
-        // İlişkili kayıtları kontrol et
-        if (Boolean.TRUE.equals(deleteDTO.getIliskiliKayitlariSil())) {
-            // İlişkili kayıtları silme işlemi burada yapılabilir
-            // Örneğin: urunTedarikciRepository.deleteByUrunId(deleteDTO.getUrunId());
-        }
-
-        repository.deleteById(deleteDTO.getUrunId());
+    public void deleteById(Integer id) {
+        repository.deleteById(id);
     }
 
     public List<UrunDTO> findByAltkId(Integer altKategoriId) {

@@ -1,6 +1,6 @@
 package com.kadir.zeytuniPOS.dto;
 
-public class BirimUpdateDTO {
+public class BirimDTOUpdate {
     private Integer birimId;
     private String birimAdi;
 

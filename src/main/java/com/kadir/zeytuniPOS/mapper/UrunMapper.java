@@ -31,7 +31,7 @@ public interface UrunMapper {
         if (id == null)
             return null;
         Birim b = new Birim();
-        b.setBirimId(id.longValue());
+        b.setBirimId(id);
         return b;
     }
 

@@ -38,36 +38,48 @@ public class IslemLogAspect {
             String islemTuru = logIslem.islemTuru();
             String hedefTablo = logIslem.hedefTablo();
             String aciklama = logIslem.aciklama();
+            int hedefIdParametreIndeksi = logIslem.hedefIdParametreIndeksi();
+            String hedefIdGetterMetodu = logIslem.hedefIdGetterMetodu();
 
-            // Hedef ID'yi belirle (result objesi üzerinden)
+            // Hedef ID'yi belirle
             Integer hedefId = null;
-            if (result != null) {
-                try {
-                    // Entity'nin ID'sini reflection ile al
-                    if (result.getClass().getSimpleName().endsWith("DTO")) {
-                        // DTO sınıflarından ID'yi al
-                        String idFieldName = hedefTablo.substring(0, hedefTablo.length() - 1) + "Id";
-                        Method getIdMethod = result.getClass().getMethod(
-                                "get" + idFieldName.substring(0, 1).toUpperCase() + idFieldName.substring(1));
-                        hedefId = (Integer) getIdMethod.invoke(result);
+            Object[] args = joinPoint.getArgs();
+
+            // CREATE işlemi için, dönen sonuçtan ID'yi al
+            if (islemTuru.equals("CREATE") && result != null) {
+                hedefId = extractIdFromObject(result, hedefTablo, hedefIdGetterMetodu);
+            }
+            // UPDATE işlemi için, parametre veya dönen sonuçtan ID'yi al
+            else if (islemTuru.equals("UPDATE")) {
+                // Önce parametreden ID'yi almaya çalış
+                if (args != null && args.length > 0 && args[0] != null) {
+                    hedefId = extractIdFromObject(args[0], hedefTablo, hedefIdGetterMetodu);
+                }
+
+                // Eğer parametreden ID alınamazsa, sonuçtan almaya çalış
+                if (hedefId == null && result != null) {
+                    hedefId = extractIdFromObject(result, hedefTablo, hedefIdGetterMetodu);
+                }
+            }
+            // DELETE işlemi için, parametre indeksinden ID'yi al
+            else if (islemTuru.equals("DELETE")) {
+                if (args != null && args.length > 0) {
+                    // Annotation'da belirtilen parametre indeksini kullan
+                    if (hedefIdParametreIndeksi >= 0 && hedefIdParametreIndeksi < args.length) {
+                        Object arg = args[hedefIdParametreIndeksi];
+                        if (arg instanceof Integer) {
+                            hedefId = (Integer) arg;
+                        }
                     }
-                } catch (Exception e) {
-                    // ID metodu bulunamadıysa veya çağrılamazsa
-                    // Metod parametrelerinden ID'yi bulmaya çalış
-                    Object[] args = joinPoint.getArgs();
-                    if (args != null && args.length > 0 && args[0] instanceof Integer) {
+                    // İlk parametre Integer ise (deleteById gibi metodlar için)
+                    else if (args[0] instanceof Integer) {
                         hedefId = (Integer) args[0];
                     }
                 }
             }
 
-            // Kullanıcı ID'sini belirle (şimdilik manuel)
+            // Kullanıcı ID'sini belirle
             Integer kullaniciId = SecurityUtil.getCurrentUserId();
-
-            // Açıklamayı zenginleştir
-            if (result != null && result.toString().length() < 100) {
-                aciklama += ": " + result.toString();
-            }
 
             // Log kaydını oluştur
             IslemLog islemLog = new IslemLog();
@@ -86,11 +98,84 @@ public class IslemLogAspect {
             // Log kaydını kaydet
             islemLogRepository.save(islemLog);
 
+            // Loglama bilgisini konsola yaz (debug için)
+            System.out.println("İşlem loglandı: " + islemTuru + " - " + hedefTablo + " - ID: " + hedefId);
+
         } catch (Exception e) {
             // Loglama sırasında hata oluşursa, uygulamanın çalışmasını etkilememesi için
             // hatayı yakala ve logla
             System.err.println("Loglama sırasında hata oluştu: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Bir nesneden ID değerini çıkarır
+     * 
+     * @param obj            ID'si çıkarılacak nesne
+     * @param tableName      Tablo adı (getter metodu oluşturmak için kullanılır)
+     * @param idGetterMethod Belirtilmişse, kullanılacak getter metodu
+     * @return Çıkarılan ID değeri, bulunamazsa null
+     */
+    private Integer extractIdFromObject(Object obj, String tableName, String idGetterMethod) {
+        if (obj == null)
+            return null;
+
+        try {
+            Method getterMethod = null;
+
+            // Belirtilen getter metodunu kullan
+            if (idGetterMethod != null && !idGetterMethod.isEmpty()) {
+                try {
+                    getterMethod = obj.getClass().getMethod(idGetterMethod);
+                } catch (NoSuchMethodException e) {
+                    // Belirtilen metod bulunamadı, diğer yöntemleri dene
+                }
+            }
+
+            // Tablo adına göre getter metodunu dene
+            if (getterMethod == null) {
+                String entityName = tableName.endsWith("s") ? tableName.substring(0, tableName.length() - 1)
+                        : tableName;
+                String getterName = "get" + entityName + "Id";
+
+                try {
+                    getterMethod = obj.getClass().getMethod(getterName);
+                } catch (NoSuchMethodException e) {
+                    // Tablo adına göre metod bulunamadı, diğer yöntemleri dene
+                }
+            }
+
+            // Genel getId metodunu dene
+            if (getterMethod == null) {
+                try {
+                    getterMethod = obj.getClass().getMethod("getId");
+                } catch (NoSuchMethodException e) {
+                    // getId metodu bulunamadı, son yöntemi dene
+                }
+            }
+
+            // getUrunId metodunu dene
+            if (getterMethod == null) {
+                try {
+                    getterMethod = obj.getClass().getMethod("getUrunId");
+                } catch (NoSuchMethodException e) {
+                    // getUrunId metodu bulunamadı, ID bulunamadı
+                    return null;
+                }
+            }
+
+            // Getter metodunu çağır ve ID'yi döndür
+            if (getterMethod != null) {
+                Object idObj = getterMethod.invoke(obj);
+                if (idObj instanceof Integer) {
+                    return (Integer) idObj;
+                }
+            }
+        } catch (Exception e) {
+            // ID getter metodu bulunamadı veya çağrılamadı
+        }
+
+        return null;
     }
 }

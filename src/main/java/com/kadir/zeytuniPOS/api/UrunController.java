@@ -51,11 +51,11 @@ public class UrunController extends BaseController<Urun, Integer> {
         }
     }
 
-    @DeleteMapping("/dto")
-    public void deleteWithDTO(@RequestBody UrunDTODelete deleteDTO) {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id) {
         SecurityUtil.setCurrentUserId(1); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
         try {
-            service.deleteWithDTO(deleteDTO);
+            service.deleteById(id);
         } finally {
             SecurityUtil.clear(); // ThreadLocal'ı temizle
         }
