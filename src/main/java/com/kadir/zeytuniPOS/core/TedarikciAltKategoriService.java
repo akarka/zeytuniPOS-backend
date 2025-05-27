@@ -1,5 +1,6 @@
 package com.kadir.zeytuniPOS.core;
 
+import com.kadir.zeytuniPOS.core.logging.LogIslem;
 import com.kadir.zeytuniPOS.data.TedarikciAltKategori;
 import com.kadir.zeytuniPOS.data.TedarikciAltKategoriRepository;
 import com.kadir.zeytuniPOS.dto.TedarikciAltKategoriCreateDTO;
@@ -7,7 +8,6 @@ import com.kadir.zeytuniPOS.dto.TedarikciAltKategoriDTO;
 import com.kadir.zeytuniPOS.dto.TedarikciAltKategoriUpdateDTO;
 import com.kadir.zeytuniPOS.mapper.TedarikciAltKategoriMapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,25 +15,25 @@ import java.util.List;
 @Service
 public class TedarikciAltKategoriService extends AbstractService<TedarikciAltKategori, Integer> {
 
-    private final TedarikciAltKategoriRepository tedarikciAltKategoriRepository;
+    private final TedarikciAltKategoriRepository repository;
     private final TedarikciAltKategoriMapper tedarikciAltKategoriMapper;
 
-    @Autowired
-    public TedarikciAltKategoriService(TedarikciAltKategoriRepository tedarikciAltKategoriRepository,
+    public TedarikciAltKategoriService(TedarikciAltKategoriRepository repository,
             TedarikciAltKategoriMapper tedarikciAltKategoriMapper) {
-        super(tedarikciAltKategoriRepository);
-        this.tedarikciAltKategoriRepository = tedarikciAltKategoriRepository;
+        super(repository);
+        this.repository = repository;
         this.tedarikciAltKategoriMapper = tedarikciAltKategoriMapper;
     }
 
+    @LogIslem(islemTuru = "CREATE", hedefTablo = "Tedarikci Kategorileri", aciklama = "Tedarikçi kategorisi eklendi", hedefIdGetterMetodu = "getTedarikciAltKategoriId")
     public TedarikciAltKategoriDTO createTedarikciAltKategori(TedarikciAltKategoriCreateDTO createDTO) {
         TedarikciAltKategori entity = tedarikciAltKategoriMapper.toEntity(createDTO);
-        TedarikciAltKategori savedEntity = tedarikciAltKategoriRepository.save(entity);
+        TedarikciAltKategori savedEntity = repository.save(entity);
         return tedarikciAltKategoriMapper.toDTO(savedEntity);
     }
 
     public List<TedarikciAltKategoriDTO> getAllTedarikciAltKategoriler() {
-        List<TedarikciAltKategori> entities = tedarikciAltKategoriRepository.findAll();
+        List<TedarikciAltKategori> entities = repository.findAll();
         return tedarikciAltKategoriMapper.toDTOList(entities);
     }
 
@@ -42,15 +42,17 @@ public class TedarikciAltKategoriService extends AbstractService<TedarikciAltKat
         return tedarikciAltKategoriMapper.toDTO(entity);
     }
 
+    @LogIslem(islemTuru = "UPDATE", hedefTablo = "Tedarikci Kategorileri", aciklama = "Tedarikçi kategorisi güncellendi", hedefIdGetterMetodu = "getTedarikciAltKategoriId")
     public TedarikciAltKategoriDTO updateTedarikciAltKategori(Integer id, TedarikciAltKategoriUpdateDTO updateDTO) {
         getById(id);
 
         TedarikciAltKategori entity = tedarikciAltKategoriMapper.toEntity(updateDTO);
-        TedarikciAltKategori updatedEntity = tedarikciAltKategoriRepository.save(entity);
+        TedarikciAltKategori updatedEntity = repository.save(entity);
         return tedarikciAltKategoriMapper.toDTO(updatedEntity);
     }
-
+    
+    @LogIslem(islemTuru = "DELETE", hedefTablo = "Tedarikci Kategorileri", aciklama = "Tedarikçi kategorisi silindi", hedefIdGetterMetodu = "getTedarikciAltKategoriId")
     public void deleteTedarikciAltKategori(Integer id) {
-        tedarikciAltKategoriRepository.deleteById(id);
+        repository.deleteById(id);
     }
 }

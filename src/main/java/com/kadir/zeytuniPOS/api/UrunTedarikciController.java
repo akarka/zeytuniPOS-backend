@@ -5,8 +5,8 @@ import com.kadir.zeytuniPOS.data.UrunTedarikci;
 import com.kadir.zeytuniPOS.dto.UrunTedarikciCreateDTO;
 import com.kadir.zeytuniPOS.dto.UrunTedarikciDTO;
 import com.kadir.zeytuniPOS.dto.UrunTedarikciUpdateDTO;
+import com.kadir.zeytuniPOS.core.SecurityUtil;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,32 +15,51 @@ import java.util.List;
 @RequestMapping("/api/uruntedarikci")
 public class UrunTedarikciController extends BaseController<UrunTedarikci, Integer> {
 
-    private final UrunTedarikciService urunTedarikciService;
+    private final UrunTedarikciService service;
 
-    @Autowired
-    public UrunTedarikciController(UrunTedarikciService urunTedarikciService) {
-        super(urunTedarikciService);
-        this.urunTedarikciService = urunTedarikciService;
+    public UrunTedarikciController(UrunTedarikciService service) {
+        super(service);
+        this.service = service;
     }
 
     @GetMapping("/dto")
     public List<UrunTedarikciDTO> getAllUrunTedarikciler() {
-        return urunTedarikciService.getAllUrunTedarikciler();
+        return service.getAllUrunTedarikciler();
     }
 
     @GetMapping("/dto/{id}")
     public UrunTedarikciDTO getUrunTedarikciById(@PathVariable Integer id) {
-        return urunTedarikciService.getUrunTedarikciById(id);
+        return service.getUrunTedarikciById(id);
     }
 
     @PostMapping("/dto")
-    public UrunTedarikciDTO create(@RequestBody UrunTedarikciCreateDTO createDTO) {
-        return urunTedarikciService.createUrunTedarikci(createDTO);
+    public UrunTedarikciDTO create(@RequestBody UrunTedarikciCreateDTO dto) {
+        SecurityUtil.setCurrentUserId(1); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
+        try {
+            return service.createUrunTedarikci(dto);
+        } finally {
+            SecurityUtil.clear(); // ThreadLocal'ı temizle
+        }
     }
 
     @PutMapping("/dto/{id}")
     public UrunTedarikciDTO update(@PathVariable Integer id, @RequestBody UrunTedarikciUpdateDTO updateDTO) {
-        return urunTedarikciService.updateUrunTedarikci(id, updateDTO);
+        SecurityUtil.setCurrentUserId(3); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
+        try {
+            return service.updateUrunTedarikci(id, updateDTO);
+        } finally {
+            SecurityUtil.clear(); // ThreadLocal'ı temizle
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id) {
+        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
+        try {
+            service.deleteUrunTedarikci(id);
+        } finally {
+            SecurityUtil.clear(); // ThreadLocal'ı temizle
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package com.kadir.zeytuniPOS.core;
 
+import com.kadir.zeytuniPOS.core.logging.LogIslem;
 import com.kadir.zeytuniPOS.data.UrunTedarikci;
 import com.kadir.zeytuniPOS.data.UrunTedarikciRepository;
 import com.kadir.zeytuniPOS.dto.UrunTedarikciCreateDTO;
@@ -7,7 +8,6 @@ import com.kadir.zeytuniPOS.dto.UrunTedarikciDTO;
 import com.kadir.zeytuniPOS.dto.UrunTedarikciUpdateDTO;
 import com.kadir.zeytuniPOS.mapper.UrunTedarikciMapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +18,6 @@ public class UrunTedarikciService extends AbstractService<UrunTedarikci, Integer
     private final UrunTedarikciRepository urunTedarikciRepository;
     private final UrunTedarikciMapper urunTedarikciMapper;
 
-    @Autowired
     public UrunTedarikciService(UrunTedarikciRepository urunTedarikciRepository,
             UrunTedarikciMapper urunTedarikciMapper) {
         super(urunTedarikciRepository);
@@ -26,6 +25,7 @@ public class UrunTedarikciService extends AbstractService<UrunTedarikci, Integer
         this.urunTedarikciMapper = urunTedarikciMapper;
     }
 
+    @LogIslem(islemTuru = "CREATE", hedefTablo = "Ürün Tedarikçi", aciklama = "Ürün tedarikçi ilişkisi eklendi", hedefIdGetterMetodu = "getUrunTedarikciId")
     public UrunTedarikciDTO createUrunTedarikci(UrunTedarikciCreateDTO createDTO) {
         UrunTedarikci entity = urunTedarikciMapper.toEntity(createDTO);
         UrunTedarikci savedEntity = urunTedarikciRepository.save(entity);
@@ -42,6 +42,7 @@ public class UrunTedarikciService extends AbstractService<UrunTedarikci, Integer
         return urunTedarikciMapper.toDTO(entity);
     }
 
+    @LogIslem(islemTuru = "UPDATE", hedefTablo = "Ürün Tedarikçi", aciklama = "Ürün tedarikçi ilişkisi güncellendi", hedefIdGetterMetodu = "getUrunTedarikciId")
     public UrunTedarikciDTO updateUrunTedarikci(Integer id, UrunTedarikciUpdateDTO updateDTO) {
         getById(id);
 
@@ -50,6 +51,7 @@ public class UrunTedarikciService extends AbstractService<UrunTedarikci, Integer
         return urunTedarikciMapper.toDTO(updatedEntity);
     }
 
+    @LogIslem(islemTuru = "DELETE", hedefTablo = "Ürün Tedarikçi", aciklama = "Ürün tedarikçi ilişkisi silindi", hedefIdGetterMetodu = "getUrunTedarikciId")
     public void deleteUrunTedarikci(Integer id) {
         urunTedarikciRepository.deleteById(id);
     }

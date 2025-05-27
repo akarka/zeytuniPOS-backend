@@ -1,5 +1,6 @@
 package com.kadir.zeytuniPOS.core;
 
+import com.kadir.zeytuniPOS.core.logging.LogIslem;
 import com.kadir.zeytuniPOS.data.Satis;
 import com.kadir.zeytuniPOS.dto.*;
 import com.kadir.zeytuniPOS.mapper.SatisMapper;
@@ -25,11 +26,18 @@ public class SatisService extends AbstractService<Satis, Integer> {
         return mapper.toDTOList(repository.findAll());
     }
 
+    @LogIslem(islemTuru = "CREATE", hedefTablo = "Satislar", aciklama = "Satış eklendi", hedefIdGetterMetodu = "getSatisId")
     public SatisDTO createFromDTO(SatisCreateDTO dto) {
         return mapper.toDTO(repository.save(mapper.toEntity(dto)));
     }
 
+    @LogIslem(islemTuru = "UPDATE", hedefTablo = "Satislar", aciklama = "Satış güncellendi", hedefIdGetterMetodu = "getSatisId")
     public SatisDTO update(SatisUpdateDTO dto) {
         return mapper.toDTO(repository.save(mapper.toEntity(dto)));
+    }
+
+    @LogIslem(islemTuru = "DELETE", hedefTablo = "Satislar", aciklama = "Satış silindi")
+    public void deleteById(Integer id) {
+        repository.deleteById(id);
     }
 }

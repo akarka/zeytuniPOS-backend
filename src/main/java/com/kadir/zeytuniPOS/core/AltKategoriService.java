@@ -1,5 +1,6 @@
 package com.kadir.zeytuniPOS.core;
 
+import com.kadir.zeytuniPOS.core.logging.LogIslem;
 import com.kadir.zeytuniPOS.data.AltKategori;
 import com.kadir.zeytuniPOS.data.AltKategoriRepository;
 import com.kadir.zeytuniPOS.dto.AltKategoriCreateDTO;
@@ -27,14 +28,21 @@ public class AltKategoriService extends AbstractService<AltKategori, Integer> {
         return mapper.toDTOList(repository.findAll());
     }
 
+    @LogIslem(islemTuru = "CREATE", hedefTablo = "Alt Kategori", aciklama = "Alt Kategori eklendi", hedefIdGetterMetodu = "getAltkId")
     public AltKategoriDTO createFromDTO(AltKategoriCreateDTO dto) {
         AltKategori entity = mapper.toEntity(dto);
         return mapper.toDTO(repository.save(entity));
     }
 
+    @LogIslem(islemTuru = "UPDATE", hedefTablo = "Alt Kategori", aciklama = "Alt Kategori güncellendi", hedefIdGetterMetodu = "getAltkId")
     public AltKategoriDTO update(AltKategoriUpdateDTO dto) {
         AltKategori entity = mapper.toEntity(dto);
         return mapper.toDTO(repository.save(entity));
+    }
+
+    @LogIslem(islemTuru = "DELETE", hedefTablo = "Alt Kategori", aciklama = "Alt Kategori silindi", hedefIdGetterMetodu = "getAltkId")
+    public void deleteById(Integer id) {
+       repository.deleteById(id);
     }
 
 }

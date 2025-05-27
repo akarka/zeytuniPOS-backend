@@ -5,6 +5,7 @@ import com.kadir.zeytuniPOS.dto.AltKategoriCreateDTO;
 import com.kadir.zeytuniPOS.dto.AltKategoriDTO;
 import com.kadir.zeytuniPOS.dto.AltKategoriUpdateDTO;
 import com.kadir.zeytuniPOS.core.AltKategoriService;
+import com.kadir.zeytuniPOS.core.SecurityUtil;
 
 import java.util.List;
 
@@ -28,11 +29,31 @@ public class AltKategoriController extends BaseController<AltKategori, Integer> 
 
     @PostMapping("/dto")
     public AltKategoriDTO create(@RequestBody AltKategoriCreateDTO dto) {
-        return service.createFromDTO(dto);
+        SecurityUtil.setCurrentUserId(1); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
+        try {
+            return service.createFromDTO(dto);
+        } finally {
+            SecurityUtil.clear(); // ThreadLocal'ı temizle
+        }
     }
 
     @PutMapping("/dto")
     public AltKategoriDTO update(@RequestBody AltKategoriUpdateDTO dto) {
-        return service.update(dto);
+        SecurityUtil.setCurrentUserId(3); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
+        try {
+            return service.update(dto);
+        } finally {
+            SecurityUtil.clear(); // ThreadLocal'ı temizle
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id) {
+        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
+        try {
+            service.deleteById(id);
+        } finally {
+            SecurityUtil.clear(); // ThreadLocal'ı temizle
+        }
     }
 }
