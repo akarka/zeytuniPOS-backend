@@ -24,9 +24,10 @@ public interface GecmisFiyatMapper {
         dto.setGecmisFiyatId(entity.getGecmisFiyatId());
         dto.setSatisFiyati(entity.getSatisFiyati());
         dto.setTarih(entity.getTarih());
-        
+
         if (entity.getUrun() != null) {
             dto.setUrunId(entity.getUrun().getUrunId());
+            dto.setUrunAdi(entity.getUrun().getUrunAdi());
         }
 
         return dto;

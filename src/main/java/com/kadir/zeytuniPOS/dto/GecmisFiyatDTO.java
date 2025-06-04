@@ -6,6 +6,7 @@ import java.time.LocalDate;
 public class GecmisFiyatDTO {
     private Integer gecmisFiyatId;
     private Integer urunId;
+    private String urunAdi;
     private BigDecimal satisFiyati;
     private LocalDate tarih;
 
@@ -23,6 +24,14 @@ public class GecmisFiyatDTO {
 
     public void setUrunId(Integer urunId) {
         this.urunId = urunId;
+    }
+
+    public String getUrunAdi() {
+        return urunAdi;
+    }
+
+    public void setUrunAdi(String urunAdi) {
+        this.urunAdi = urunAdi;
     }
 
     public BigDecimal getSatisFiyati() {

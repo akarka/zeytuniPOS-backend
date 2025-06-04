@@ -8,6 +8,7 @@ import com.kadir.zeytuniPOS.data.SatisRepository;
 
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -15,11 +16,13 @@ public class SatisService extends AbstractService<Satis, Integer> {
 
     private final SatisRepository repository;
     private final SatisMapper mapper;
+    private final GecmisFiyatService gecmisFiyatService;
 
-    public SatisService(SatisRepository repository, SatisMapper mapper) {
+    public SatisService(SatisRepository repository, SatisMapper mapper, GecmisFiyatService gecmisFiyatService) {
         super(repository);
         this.repository = repository;
         this.mapper = mapper;
+        this.gecmisFiyatService = gecmisFiyatService;
     }
 
     public List<SatisDTO> getAllDTO() {
@@ -28,7 +31,16 @@ public class SatisService extends AbstractService<Satis, Integer> {
 
     @LogIslem(islemTuru = "CREATE", hedefTablo = "Satislar", aciklama = "Satış eklendi", hedefIdGetterMetodu = "getSatisId")
     public SatisDTO createFromDTO(SatisCreateDTO dto) {
-        return mapper.toDTO(repository.save(mapper.toEntity(dto)));
+        Satis satis = mapper.toEntity(dto);
+        Satis saved = repository.save(satis);
+
+        GecmisFiyatCreateDTO fiyatDTO = new GecmisFiyatCreateDTO();
+        fiyatDTO.setUrunId(dto.getUrunId());
+        fiyatDTO.setSatisFiyati(BigDecimal.valueOf(dto.getSatisFiyati()));
+        fiyatDTO.setTarih(saved.getSatisTarihi().toLocalDateTime().toLocalDate());
+        gecmisFiyatService.createGecmisFiyat(fiyatDTO);
+
+        return mapper.toDTO(saved);
     }
 
     @LogIslem(islemTuru = "UPDATE", hedefTablo = "Satislar", aciklama = "Satış güncellendi", hedefIdGetterMetodu = "getSatisId")

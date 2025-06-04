@@ -1,6 +1,7 @@
 package com.kadir.zeytuniPOS.api;
 
 import com.kadir.zeytuniPOS.core.IslemLogService;
+import com.kadir.zeytuniPOS.core.security.SecurityUtil;
 import com.kadir.zeytuniPOS.data.IslemLog;
 import com.kadir.zeytuniPOS.dto.IslemLogCreateDTO;
 import com.kadir.zeytuniPOS.dto.IslemLogDTO;
@@ -25,22 +26,42 @@ public class IslemLogController extends BaseController<IslemLog, Integer> {
 
     @GetMapping("/dto")
     public List<IslemLogDTO> getAllIslemLogs() {
-        return islemLogService.getAllIslemLogs();
+        SecurityUtil.setCurrentUserId(2); // İleride oturumdan alınacak
+        try {
+            return islemLogService.getAllIslemLogs();
+        } finally {
+            SecurityUtil.clear();
+        }
     }
 
     @GetMapping("/dto/{id}")
     public IslemLogDTO getIslemLogById(@PathVariable Integer id) {
-        return islemLogService.getIslemLogById(id);
+        SecurityUtil.setCurrentUserId(2); // İleride oturumdan alınacak
+        try {
+            return islemLogService.getIslemLogById(id);
+        } finally {
+            SecurityUtil.clear();
+        }
     }
 
     @PostMapping("/dto")
     public IslemLogDTO create(@RequestBody IslemLogCreateDTO createDTO) {
-        return islemLogService.createIslemLog(createDTO);
+        SecurityUtil.setCurrentUserId(2); // İleride oturumdan alınacak
+        try {
+            return islemLogService.createIslemLog(createDTO);
+        } finally {
+            SecurityUtil.clear();
+        }
     }
 
     @PutMapping("/dto")
     public IslemLogDTO update(@RequestBody IslemLogUpdateDTO updateDTO) {
-        return islemLogService.updateIslemLog(updateDTO.getLogId(), updateDTO);
+        SecurityUtil.setCurrentUserId(2); // İleride oturumdan alınacak
+        try {
+            return islemLogService.updateIslemLog(updateDTO.getLogId(), updateDTO);
+        } finally {
+            SecurityUtil.clear();
+        }
     }
 
 }

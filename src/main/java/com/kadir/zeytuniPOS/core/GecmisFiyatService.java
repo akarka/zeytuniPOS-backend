@@ -19,39 +19,38 @@ public class GecmisFiyatService extends AbstractService<GecmisFiyat, Integer> {
     private final GecmisFiyatMapper gecmisFiyatMapper;
 
     @Autowired
-    public GecmisFiyatService(GecmisFiyatRepository gecmisFiyatRepository, 
-                             GecmisFiyatMapper gecmisFiyatMapper) {
+    public GecmisFiyatService(GecmisFiyatRepository gecmisFiyatRepository,
+            GecmisFiyatMapper gecmisFiyatMapper) {
         super(gecmisFiyatRepository);
         this.gecmisFiyatRepository = gecmisFiyatRepository;
         this.gecmisFiyatMapper = gecmisFiyatMapper;
     }
 
-    public GecmisFiyatDTO createGecmisFiyat(GecmisFiyatCreateDTO createDTO) {
-        GecmisFiyat entity = gecmisFiyatMapper.toEntity(createDTO);
-        GecmisFiyat savedEntity = gecmisFiyatRepository.save(entity);
-        return gecmisFiyatMapper.toDTO(savedEntity);
+    public GecmisFiyatDTO createGecmisFiyat(GecmisFiyatCreateDTO dto) {
+        GecmisFiyat entity = gecmisFiyatMapper.toEntity(dto);
+        return gecmisFiyatMapper.toDTO(gecmisFiyatRepository.save(entity));
     }
 
     public List<GecmisFiyatDTO> getAllGecmisFiyatlar() {
-        List<GecmisFiyat> entities = gecmisFiyatRepository.findAll();
-        return gecmisFiyatMapper.toDTOList(entities);
+        return gecmisFiyatMapper.toDTOList(gecmisFiyatRepository.findAll());
     }
 
     public GecmisFiyatDTO getGecmisFiyatById(Integer id) {
-        GecmisFiyat entity = getById(id);
-        return gecmisFiyatMapper.toDTO(entity);
+        return gecmisFiyatMapper.toDTO(getById(id));
     }
 
-    public GecmisFiyatDTO updateGecmisFiyat(Integer id, GecmisFiyatUpdateDTO updateDTO) {
-        
+    public GecmisFiyatDTO updateGecmisFiyat(Integer id, GecmisFiyatUpdateDTO dto) {
         getById(id);
-        
-        GecmisFiyat entity = gecmisFiyatMapper.toEntity(updateDTO);
-        GecmisFiyat updatedEntity = gecmisFiyatRepository.save(entity);
-        return gecmisFiyatMapper.toDTO(updatedEntity);
+        return gecmisFiyatMapper.toDTO(gecmisFiyatRepository.save(gecmisFiyatMapper.toEntity(dto)));
     }
 
     public void deleteGecmisFiyat(Integer id) {
         gecmisFiyatRepository.deleteById(id);
+    }
+
+    public List<GecmisFiyatDTO> getUrunDetayi(Integer urunId) {
+        List<GecmisFiyat> liste = gecmisFiyatRepository.findByUrun_UrunIdOrderByTarihDesc(urunId);
+
+        return gecmisFiyatMapper.toDTOList(liste);
     }
 }
