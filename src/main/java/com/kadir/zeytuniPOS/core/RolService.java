@@ -1,5 +1,6 @@
 package com.kadir.zeytuniPOS.core;
 
+import com.kadir.zeytuniPOS.core.logging.LogIslem;
 import com.kadir.zeytuniPOS.data.Rol;
 import com.kadir.zeytuniPOS.data.RolRepository;
 import com.kadir.zeytuniPOS.dto.RolCreateDTO;
@@ -19,14 +20,15 @@ public class RolService extends AbstractService<Rol, Integer> {
     private final RolMapper rolMapper;
 
     @Autowired
-    public RolService(RolRepository rolRepository, 
-                     RolMapper rolMapper) {
+    public RolService(RolRepository rolRepository,
+            RolMapper rolMapper) {
         super(rolRepository);
         this.rolRepository = rolRepository;
         this.rolMapper = rolMapper;
     }
 
-    public RolDTO createRol(RolCreateDTO createDTO) {
+    @LogIslem(islemTuru = "CREATE", hedefTablo = "Roller", aciklama = "Rol eklendi", hedefIdGetterMetodu = "getRolId")
+    public RolDTO create(RolCreateDTO createDTO) {
         Rol entity = rolMapper.toEntity(createDTO);
         Rol savedEntity = rolRepository.save(entity);
         return rolMapper.toDTO(savedEntity);
@@ -42,16 +44,16 @@ public class RolService extends AbstractService<Rol, Integer> {
         return rolMapper.toDTO(entity);
     }
 
-    public RolDTO updateRol(Integer id, RolUpdateDTO updateDTO) {
-        // ID kontrolü
-        getById(id);
-        
+    @LogIslem(islemTuru = "UPDATE", hedefTablo = "Roller", aciklama = "Rol güncellendi", hedefIdGetterMetodu = "getRolId")
+    public RolDTO update(RolUpdateDTO updateDTO) {
+
         Rol entity = rolMapper.toEntity(updateDTO);
         Rol updatedEntity = rolRepository.save(entity);
         return rolMapper.toDTO(updatedEntity);
     }
 
-    public void deleteRol(Integer id) {
+    @LogIslem(islemTuru = "DELETE", hedefTablo = "Roller", aciklama = "Rol silinddi", hedefIdGetterMetodu = "getRolId")
+    public void delete(Integer id) {
         rolRepository.deleteById(id);
     }
 }

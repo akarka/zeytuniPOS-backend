@@ -6,6 +6,9 @@ public class KullaniciUpdateDTO {
     private String sifreHash;
     private Boolean aktif;
 
+    private Integer rolAdi;
+    private Integer rolId;
+
     public Integer getKullaniciId() {
         return kullaniciId;
     }
@@ -37,4 +40,21 @@ public class KullaniciUpdateDTO {
     public void setAktif(Boolean aktif) {
         this.aktif = aktif;
     }
+
+    public Integer getRolAdi() {
+        return rolAdi;
+    }
+
+    public void setRolAdi(Integer rolAdi) {
+        this.rolAdi = rolAdi;
+    }
+
+    public Integer getRolId() {
+        return rolId;
+    }
+
+    public void setRolId(Integer rolId) {
+        this.rolId = rolId;
+    }
+
 }

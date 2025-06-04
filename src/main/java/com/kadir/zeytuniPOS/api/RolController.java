@@ -1,6 +1,7 @@
 package com.kadir.zeytuniPOS.api;
 
 import com.kadir.zeytuniPOS.core.RolService;
+import com.kadir.zeytuniPOS.core.security.SecurityUtil;
 import com.kadir.zeytuniPOS.data.Rol;
 import com.kadir.zeytuniPOS.dto.RolCreateDTO;
 import com.kadir.zeytuniPOS.dto.RolDTO;
@@ -34,17 +35,32 @@ public class RolController extends BaseController<Rol, Integer> {
     }
 
     @PostMapping("/dto")
-    public RolDTO create(@RequestBody RolCreateDTO createDTO) {
-        return rolService.createRol(createDTO);
+    public RolDTO create(@RequestBody RolCreateDTO dto) {
+        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
+        try {
+            return rolService.create(dto);
+        } finally {
+            SecurityUtil.clear(); // ThreadLocal'ı temizle
+        }
     }
 
     @PutMapping("/dto")
-    public RolDTO update(@RequestBody RolUpdateDTO updateDTO) {
-        return rolService.updateRol(updateDTO.getRolId(), updateDTO);
+    public RolDTO update(@RequestBody RolUpdateDTO dto) {
+        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
+        try {
+            return rolService.update(dto);
+        } finally {
+            SecurityUtil.clear(); // ThreadLocal'ı temizle
+        }
     }
 
     @DeleteMapping("/dto/{id}")
     public void delete(@PathVariable Integer id) {
-        rolService.deleteRol(id);
+        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
+        try {
+            service.delete(id);
+        } finally {
+            SecurityUtil.clear(); // ThreadLocal'ı temizle
+        }
     }
 }

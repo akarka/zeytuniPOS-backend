@@ -2,8 +2,10 @@ package com.kadir.zeytuniPOS.dto;
 
 public class KullaniciCreateDTO {
     private String kullaniciAdi;
-    private String sifreHash;
+    private String sifre;
     private Boolean aktif;
+    private Integer rolAdi;
+    private Integer rolId;
 
     public String getKullaniciAdi() {
         return kullaniciAdi;
@@ -13,12 +15,12 @@ public class KullaniciCreateDTO {
         this.kullaniciAdi = kullaniciAdi;
     }
 
-    public String getSifreHash() {
-        return sifreHash;
+    public String getSifre() {
+        return sifre;
     }
 
-    public void setSifreHash(String sifreHash) {
-        this.sifreHash = sifreHash;
+    public void setSifre(String sifre) {
+        this.sifre = sifre;
     }
 
     public Boolean getAktif() {
@@ -27,5 +29,21 @@ public class KullaniciCreateDTO {
 
     public void setAktif(Boolean aktif) {
         this.aktif = aktif;
+    }
+
+    public Integer getRolAdi() {
+        return rolAdi;
+    }
+
+    public void setRolAdi(Integer rolAdi) {
+        this.rolAdi = rolAdi;
+    }
+
+    public Integer getRolId() {
+        return rolId;
+    }
+
+    public void setRolId(Integer rolId) {
+        this.rolId = rolId;
     }
 }

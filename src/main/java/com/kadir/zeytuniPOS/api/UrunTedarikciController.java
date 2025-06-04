@@ -1,11 +1,11 @@
 package com.kadir.zeytuniPOS.api;
 
 import com.kadir.zeytuniPOS.core.UrunTedarikciService;
+import com.kadir.zeytuniPOS.core.security.SecurityUtil;
 import com.kadir.zeytuniPOS.data.UrunTedarikci;
 import com.kadir.zeytuniPOS.dto.UrunTedarikciCreateDTO;
 import com.kadir.zeytuniPOS.dto.UrunTedarikciDTO;
 import com.kadir.zeytuniPOS.dto.UrunTedarikciUpdateDTO;
-import com.kadir.zeytuniPOS.core.SecurityUtil;
 
 import org.springframework.web.bind.annotation.*;
 

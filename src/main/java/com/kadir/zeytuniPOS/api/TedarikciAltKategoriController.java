@@ -1,7 +1,7 @@
 package com.kadir.zeytuniPOS.api;
 
-import com.kadir.zeytuniPOS.core.SecurityUtil;
 import com.kadir.zeytuniPOS.core.TedarikciAltKategoriService;
+import com.kadir.zeytuniPOS.core.security.SecurityUtil;
 import com.kadir.zeytuniPOS.data.TedarikciAltKategori;
 import com.kadir.zeytuniPOS.dto.TedarikciAltKategoriCreateDTO;
 import com.kadir.zeytuniPOS.dto.TedarikciAltKategoriDTO;

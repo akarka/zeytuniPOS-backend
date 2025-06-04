@@ -1,11 +1,10 @@
 package com.kadir.zeytuniPOS.data;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Satislar")
-public class Satis implements Loglanabilir {
+public class Satis{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,16 +64,4 @@ public class Satis implements Loglanabilir {
         this.satisTarihi = satisTarihi;
     }
 
-    // LOGGING
-    @Override
-    @JsonIgnore
-    public Integer getHedefId() {
-        return this.satisId;
-    }
-
-    @Override
-    @JsonIgnore
-    public String getHedefTablo() {
-        return "Satislar";
-    }
 }

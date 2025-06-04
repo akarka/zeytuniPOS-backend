@@ -5,7 +5,7 @@ import com.kadir.zeytuniPOS.dto.AltKategoriCreateDTO;
 import com.kadir.zeytuniPOS.dto.AltKategoriDTO;
 import com.kadir.zeytuniPOS.dto.AltKategoriUpdateDTO;
 import com.kadir.zeytuniPOS.core.AltKategoriService;
-import com.kadir.zeytuniPOS.core.SecurityUtil;
+import com.kadir.zeytuniPOS.core.security.SecurityUtil;
 
 import java.util.List;
 

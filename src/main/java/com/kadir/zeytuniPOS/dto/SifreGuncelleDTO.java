@@ -1,22 +1,23 @@
 package com.kadir.zeytuniPOS.dto;
 
-public class KullaniciRolCreateDTO {
+public class SifreGuncelleDTO {
     private Integer kullaniciId;
-    private Integer rolId;
-    
+    private String yeniSifre;
+
     public Integer getKullaniciId() {
         return kullaniciId;
     }
-    
+
     public void setKullaniciId(Integer kullaniciId) {
         this.kullaniciId = kullaniciId;
     }
-    
-    public Integer getRolId() {
-        return rolId;
+
+    public String getYeniSifre() {
+        return yeniSifre;
     }
-    
-    public void setRolId(Integer rolId) {
-        this.rolId = rolId;
+
+    public void setYeniSifre(String yeniSifre) {
+        this.yeniSifre = yeniSifre;
     }
+
 }

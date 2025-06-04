@@ -20,6 +20,10 @@ public class Kullanici {
     @Column(name = "Aktif", nullable = false)
     private Boolean aktif;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RolID", nullable = false)
+    private Rol rol;
+
     public Integer getKullaniciId() {
         return kullaniciId;
     }
@@ -51,4 +55,13 @@ public class Kullanici {
     public void setAktif(Boolean aktif) {
         this.aktif = aktif;
     }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
 }

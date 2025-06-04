@@ -1,7 +1,7 @@
 package com.kadir.zeytuniPOS.api;
 
-import com.kadir.zeytuniPOS.core.SecurityUtil;
 import com.kadir.zeytuniPOS.core.UrunKategorileriService;
+import com.kadir.zeytuniPOS.core.security.SecurityUtil;
 import com.kadir.zeytuniPOS.data.UrunKategorileri;
 import com.kadir.zeytuniPOS.dto.*;
 

@@ -1,4 +1,4 @@
-package com.kadir.zeytuniPOS.core;
+package com.kadir.zeytuniPOS.core.security;
 
 /*
  * Güvenlik işlemleri için yardımcı sınıf

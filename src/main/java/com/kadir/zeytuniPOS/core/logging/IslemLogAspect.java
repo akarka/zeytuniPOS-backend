@@ -1,9 +1,9 @@
 package com.kadir.zeytuniPOS.core.logging;
 
+import com.kadir.zeytuniPOS.core.security.SecurityUtil;
 import com.kadir.zeytuniPOS.data.IslemLog;
 import com.kadir.zeytuniPOS.data.Kullanici;
 import com.kadir.zeytuniPOS.data.IslemLogRepository;
-import com.kadir.zeytuniPOS.core.SecurityUtil;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
