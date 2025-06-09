@@ -1,33 +1,34 @@
 package com.kadir.zeytuniPOS.core.security;
 
-/*
- * Güvenlik işlemleri için yardımcı sınıf
- */
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 public class SecurityUtil {
 
     private static ThreadLocal<Integer> currentUserId = new ThreadLocal<>();
 
-    /**
-     * Mevcut kullanıcı ID'sini ayarlar
-     * 
-     * @param userId Kullanıcı ID'si
-     */
     public static void setCurrentUserId(Integer userId) {
         currentUserId.set(userId);
     }
 
-    /**
-     * Mevcut kullanıcı ID'sini döndürür
-     * 
-     * @return Kullanıcı ID'si, yoksa varsayılan olarak 1
-     */
     public static Integer getCurrentUserId() {
-        return currentUserId.get() != null ? currentUserId.get() : 2; // Varsayılan olarak 1
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()
+                && authentication.getPrincipal() instanceof CustomUserDetails) {
+            return ((CustomUserDetails) authentication.getPrincipal()).getId();
+        }
+        return null; // Kullanıcı yoksa null döner
     }
 
-    /**
-     * ThreadLocal'ı temizler
-     */
+    public static Integer getCurrentUserRolId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()
+                && authentication.getPrincipal() instanceof CustomUserDetails) {
+            return ((CustomUserDetails) authentication.getPrincipal()).getRolId();
+        }
+        return null;
+    }
+
     public static void clear() {
         currentUserId.remove();
     }

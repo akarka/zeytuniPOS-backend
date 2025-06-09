@@ -23,6 +23,10 @@ public class CustomUserDetails implements UserDetails {
         return kullanici.getKullaniciAdi();
     }
 
+    public Integer getRolId() {
+        return kullanici.getRol().getRolId();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // Rol sistemi eklendiğinde burası genişletilecek
