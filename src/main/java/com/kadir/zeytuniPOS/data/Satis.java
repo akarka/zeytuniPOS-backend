@@ -1,5 +1,7 @@
 package com.kadir.zeytuniPOS.data;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -21,8 +23,8 @@ public class Satis {
     @Column(name = "SatisFiyati", nullable = true, length = 50)
     private Integer satisFiyati;
 
-    @Column(name = "SatisTarihi", nullable = true, length = 8)
-    private java.sql.Timestamp satisTarihi;
+    @Column(name = "SatisTarihi", nullable = true)
+    private LocalDateTime satisTarihi;
 
     public Integer getSatisId() {
         return satisId;
@@ -56,11 +58,11 @@ public class Satis {
         this.satisFiyati = satisFiyati;
     }
 
-    public java.sql.Timestamp getSatisTarihi() {
+    public LocalDateTime getSatisTarihi() {
         return satisTarihi;
     }
 
-    public void setSatisTarihi(java.sql.Timestamp satisTarihi) {
+    public void setSatisTarihi(LocalDateTime satisTarihi) {
         this.satisTarihi = satisTarihi;
     }
 

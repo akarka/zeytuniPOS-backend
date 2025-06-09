@@ -37,7 +37,7 @@ public class SatisService extends AbstractService<Satis, Integer> {
         GecmisFiyatCreateDTO fiyatDTO = new GecmisFiyatCreateDTO();
         fiyatDTO.setUrunId(dto.getUrunId());
         fiyatDTO.setSatisFiyati(BigDecimal.valueOf(dto.getSatisFiyati()));
-        fiyatDTO.setTarih(saved.getSatisTarihi().toLocalDateTime().toLocalDate());
+        fiyatDTO.setTarih(saved.getSatisTarihi());
         gecmisFiyatService.createGecmisFiyat(fiyatDTO);
 
         return mapper.toDTO(saved);

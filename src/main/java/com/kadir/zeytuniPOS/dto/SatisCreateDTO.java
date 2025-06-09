@@ -1,12 +1,13 @@
 package com.kadir.zeytuniPOS.dto;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class SatisCreateDTO {
     private Integer urunId;
     private Integer miktar;
-    private Integer satisFiyati;
-    private Timestamp satisTarihi;
+    private Long satisFiyati;
+    private LocalDateTime satisTarihi;
+    private String notlar;
 
     public Integer getUrunId() {
         return urunId;
@@ -24,19 +25,27 @@ public class SatisCreateDTO {
         this.miktar = miktar;
     }
 
-    public Integer getSatisFiyati() {
+    public Long getSatisFiyati() {
         return satisFiyati;
     }
 
-    public void setSatisFiyati(Integer satisFiyati) {
+    public void setSatisFiyati(Long satisFiyati) {
         this.satisFiyati = satisFiyati;
     }
 
-    public Timestamp getSatisTarihi() {
+    public LocalDateTime getSatisTarihi() {
         return satisTarihi;
     }
 
-    public void setSatisTarihi(Timestamp satisTarihi) {
+    public void setSatisTarihi(LocalDateTime satisTarihi) {
         this.satisTarihi = satisTarihi;
+    }
+
+    public String getNotlar() {
+        return notlar;
+    }
+
+    public void setNotlar(String notlar) {
+        this.notlar = notlar;
     }
 }

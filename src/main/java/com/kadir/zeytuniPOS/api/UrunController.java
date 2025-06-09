@@ -61,9 +61,14 @@ public class UrunController extends BaseController<Urun, Integer> {
         }
     }
 
-    @GetMapping("/search/category/{altKategoriId}")
+    @GetMapping("/search/category/{altkId}")
     public List<UrunDTO> findByAltkId(@PathVariable Integer altkId) {
-        return service.findByAltkId(altkId);
+        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
+        try {
+            return service.findByAltkId(altkId);
+        } finally {
+            SecurityUtil.clear(); // ThreadLocal'ı temizle
+        }
     }
 
 }

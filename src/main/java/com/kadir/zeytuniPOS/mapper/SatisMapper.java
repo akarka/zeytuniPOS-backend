@@ -1,6 +1,7 @@
 package com.kadir.zeytuniPOS.mapper;
 
 import com.kadir.zeytuniPOS.data.Satis;
+import com.kadir.zeytuniPOS.dto.SatisUpdateDTO;
 import com.kadir.zeytuniPOS.data.Urun;
 import com.kadir.zeytuniPOS.dto.*;
 

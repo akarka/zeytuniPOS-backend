@@ -1,13 +1,13 @@
 package com.kadir.zeytuniPOS.dto;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class SatisDTO {
     private Integer satisId;
     private Integer urunId;
     private Integer miktar;
     private Integer satisFiyati;
-    private Timestamp satisTarihi;
+    private LocalDateTime satisTarihi;
 
     public Integer getSatisId() {
         return satisId;
@@ -41,11 +41,11 @@ public class SatisDTO {
         this.satisFiyati = satisFiyati;
     }
 
-    public Timestamp getSatisTarihi() {
+    public LocalDateTime getSatisTarihi() {
         return satisTarihi;
     }
 
-    public void setSatisTarihi(Timestamp satisTarihi) {
+    public void setSatisTarihi(LocalDateTime satisTarihi) {
         this.satisTarihi = satisTarihi;
     }
 }
