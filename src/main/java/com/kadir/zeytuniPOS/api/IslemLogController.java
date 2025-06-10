@@ -8,8 +8,11 @@ import com.kadir.zeytuniPOS.dto.IslemLogDTO;
 import com.kadir.zeytuniPOS.dto.IslemLogUpdateDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -24,44 +27,35 @@ public class IslemLogController extends BaseController<IslemLog, Integer> {
         this.islemLogService = islemLogService;
     }
 
+    private void checkYetki(int... izinliRoller) {
+        Integer rolId = SecurityUtil.getCurrentUserRolId();
+        if (rolId == null || Arrays.stream(izinliRoller).noneMatch(id -> id == rolId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bu işlem için yetkiniz yok.");
+        }
+    }
+
     @GetMapping("/dto")
     public List<IslemLogDTO> getAllIslemLogs() {
-        SecurityUtil.setCurrentUserId(2); // İleride oturumdan alınacak
-        try {
-            return islemLogService.getAllIslemLogs();
-        } finally {
-            SecurityUtil.clear();
-        }
+        checkYetki(1, 2, 3);
+        return islemLogService.getAllIslemLogs();
     }
 
     @GetMapping("/dto/{id}")
     public IslemLogDTO getIslemLogById(@PathVariable Integer id) {
-        SecurityUtil.setCurrentUserId(2); // İleride oturumdan alınacak
-        try {
-            return islemLogService.getIslemLogById(id);
-        } finally {
-            SecurityUtil.clear();
-        }
+        checkYetki(1, 2, 3);
+        return islemLogService.getIslemLogById(id);
     }
 
     @PostMapping("/dto")
     public IslemLogDTO create(@RequestBody IslemLogCreateDTO createDTO) {
-        SecurityUtil.setCurrentUserId(2); // İleride oturumdan alınacak
-        try {
-            return islemLogService.createIslemLog(createDTO);
-        } finally {
-            SecurityUtil.clear();
-        }
+        checkYetki(1, 2, 3);
+        return islemLogService.createIslemLog(createDTO);
     }
 
     @PutMapping("/dto")
     public IslemLogDTO update(@RequestBody IslemLogUpdateDTO updateDTO) {
-        SecurityUtil.setCurrentUserId(2); // İleride oturumdan alınacak
-        try {
-            return islemLogService.updateIslemLog(updateDTO.getLogId(), updateDTO);
-        } finally {
-            SecurityUtil.clear();
-        }
+        checkYetki(1, 2, 3);
+        return islemLogService.updateIslemLog(updateDTO.getLogId(), updateDTO);
     }
 
 }

@@ -5,8 +5,12 @@ import com.kadir.zeytuniPOS.dto.SiparisKalemiDTO;
 import com.kadir.zeytuniPOS.dto.SiparisKalemiUpdateDTO;
 import com.kadir.zeytuniPOS.core.security.SecurityUtil;
 import com.kadir.zeytuniPOS.core.SiparisKalemiService;
-import org.springframework.web.bind.annotation.*;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -19,38 +23,34 @@ public class SiparisKalemiController {
         this.service = service;
     }
 
+    private void checkYetki(int... izinliRoller) {
+        Integer rolId = SecurityUtil.getCurrentUserRolId();
+        if (rolId == null || Arrays.stream(izinliRoller).noneMatch(id -> id == rolId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bu işlem için yetkiniz yok.");
+        }
+    }
+
     @GetMapping("/dto")
     public List<SiparisKalemiDTO> getAllDTO() {
+        checkYetki(1, 2, 3);
         return service.getAllDTO();
     }
 
     @PostMapping("/dto")
     public SiparisKalemiDTO create(@RequestBody SiparisKalemiCreateDTO dto) {
-        SecurityUtil.setCurrentUserId(2); // İleride authentication ile otomatik olacak
-        try {
-            return service.createFromDTO(dto);
-        } finally {
-            SecurityUtil.clear();
-        }
+        checkYetki(1, 2, 3);
+        return service.createFromDTO(dto);
     }
 
     @PutMapping("/dto")
     public SiparisKalemiDTO update(@RequestBody SiparisKalemiUpdateDTO dto) {
-        SecurityUtil.setCurrentUserId(2);
-        try {
-            return service.update(dto);
-        } finally {
-            SecurityUtil.clear();
-        }
+        checkYetki(1, 2, 3);
+        return service.update(dto);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
-        SecurityUtil.setCurrentUserId(2);
-        try {
-            service.deleteById(id);
-        } finally {
-            SecurityUtil.clear();
-        }
+        checkYetki(1, 2, 3);
+        service.deleteById(id);
     }
 }

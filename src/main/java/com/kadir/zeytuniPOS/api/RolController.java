@@ -8,8 +8,11 @@ import com.kadir.zeytuniPOS.dto.RolDTO;
 import com.kadir.zeytuniPOS.dto.RolUpdateDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -24,43 +27,40 @@ public class RolController extends BaseController<Rol, Integer> {
         this.rolService = rolService;
     }
 
+    private void checkYetki(int... izinliRoller) {
+        Integer rolId = SecurityUtil.getCurrentUserRolId();
+        if (rolId == null || Arrays.stream(izinliRoller).noneMatch(id -> id == rolId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bu işlem için yetkiniz yok.");
+        }
+    }
+
     @GetMapping("/dto")
     public List<RolDTO> getAllRoller() {
+        checkYetki(1, 2, 3);
         return rolService.getAllRoller();
     }
 
     @GetMapping("/dto/{id}")
     public RolDTO getRolById(@PathVariable Integer id) {
+        checkYetki(1, 2, 3);
         return rolService.getRolById(id);
     }
 
     @PostMapping("/dto")
     public RolDTO create(@RequestBody RolCreateDTO dto) {
-        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
-        try {
-            return rolService.create(dto);
-        } finally {
-            SecurityUtil.clear(); // ThreadLocal'ı temizle
-        }
+        checkYetki(1);
+        return rolService.create(dto);
     }
 
     @PutMapping("/dto")
     public RolDTO update(@RequestBody RolUpdateDTO dto) {
-        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
-        try {
-            return rolService.update(dto);
-        } finally {
-            SecurityUtil.clear(); // ThreadLocal'ı temizle
-        }
+        checkYetki(1);
+        return rolService.update(dto);
     }
 
     @DeleteMapping("/dto/{id}")
     public void delete(@PathVariable Integer id) {
-        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
-        try {
-            service.delete(id);
-        } finally {
-            SecurityUtil.clear(); // ThreadLocal'ı temizle
-        }
+        checkYetki(1);
+        service.delete(id);
     }
 }

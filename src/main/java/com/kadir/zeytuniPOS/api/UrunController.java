@@ -9,8 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/urunler")
@@ -57,13 +56,13 @@ public class UrunController extends BaseController<Urun, Integer> {
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
-        checkYetki(1, 2);
+        checkYetki(1);
         service.deleteById(id);
     }
 
     @GetMapping("/search/category/{altkId}")
     public List<UrunDTO> findByAltkId(@PathVariable Integer altkId) {
-        checkYetki(1, 2);
+        checkYetki(1, 2, 3);
         return service.findByAltkId(altkId);
     }
 

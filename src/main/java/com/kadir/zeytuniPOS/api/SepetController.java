@@ -1,8 +1,11 @@
 package com.kadir.zeytuniPOS.api;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.kadir.zeytuniPOS.core.SepetService;
 import com.kadir.zeytuniPOS.core.security.SecurityUtil;
@@ -20,38 +23,34 @@ public class SepetController {
         this.service = service;
     }
 
+    private void checkYetki(int... izinliRoller) {
+        Integer rolId = SecurityUtil.getCurrentUserRolId();
+        if (rolId == null || Arrays.stream(izinliRoller).noneMatch(id -> id == rolId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bu işlem için yetkiniz yok.");
+        }
+    }
+
     @GetMapping("/dto")
     public List<SepetDTO> getAllDTO() {
+        checkYetki(1, 2, 3);
         return service.getAllDTO();
     }
 
     @PostMapping("/dto")
     public SepetDTO create(@RequestBody SepetCreateDTO dto) {
-        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
-        try {
-            return service.createFromDTO(dto);
-        } finally {
-            SecurityUtil.clear(); // ThreadLocal'ı temizle
-        }
+        checkYetki(1, 2, 3);
+        return service.createFromDTO(dto);
     }
 
     @PutMapping("/dto")
     public SepetDTO update(@RequestBody SepetUpdateDTO dto) {
-        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
-        try {
-            return service.update(dto);
-        } finally {
-            SecurityUtil.clear(); // ThreadLocal'ı temizle
-        }
+        checkYetki(1, 2, 3);
+        return service.update(dto);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
-        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
-        try {
-            service.deleteById(id);
-        } finally {
-            SecurityUtil.clear(); // ThreadLocal'ı temizle
-        }
+        checkYetki(1, 2, 3);
+        service.deleteById(id);
     }
 }

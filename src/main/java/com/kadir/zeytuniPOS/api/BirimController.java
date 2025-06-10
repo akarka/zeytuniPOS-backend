@@ -7,9 +7,11 @@ import com.kadir.zeytuniPOS.dto.BirimDTOCreate;
 import com.kadir.zeytuniPOS.dto.BirimDTO;
 import com.kadir.zeytuniPOS.dto.BirimDTOUpdate;
 
-import java.util.List;
+import java.util.*;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/birimler")
@@ -22,44 +24,35 @@ public class BirimController extends BaseController<Birim, Integer> {
         this.service = service;
     }
 
+    private void checkYetki(int... izinliRoller) {
+        Integer rolId = SecurityUtil.getCurrentUserRolId();
+        if (rolId == null || Arrays.stream(izinliRoller).noneMatch(id -> id == rolId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bu işlem için yetkiniz yok.");
+        }
+    }
+
     @GetMapping("/dto")
     public List<BirimDTO> getAllDTO() {
-        SecurityUtil.setCurrentUserId(2); // İleride oturumdan alınacak
-        try {
-            return service.getAllDTO();
-        } finally {
-            SecurityUtil.clear();
-        }
+        checkYetki(1, 2, 3);
+        return service.getAllDTO();
     }
 
     @PostMapping("/dto")
     public BirimDTO create(@RequestBody BirimDTOCreate dto) {
-        SecurityUtil.setCurrentUserId(2); // İleride oturumdan alınacak
-        try {
-            return service.createFromDTO(dto);
-        } finally {
-            SecurityUtil.clear();
-        }
+        checkYetki(1, 2);
+        return service.createFromDTO(dto);
     }
 
     @Override
     @DeleteMapping("/{id}")
     public void delete(Integer id) {
-        SecurityUtil.setCurrentUserId(2); // İleride oturumdan alınacak
-        try {
-            service.deleteById(id);
-        } finally {
-            SecurityUtil.clear();
-        }
+        checkYetki(1, 2);
+        service.deleteById(id);
     }
 
     @PutMapping("/dto")
     public BirimDTO update(@RequestBody BirimDTOUpdate dto) {
-        SecurityUtil.setCurrentUserId(2); // İleride oturumdan alınacak
-        try {
-            return service.update(dto);
-        } finally {
-            SecurityUtil.clear();
-        }
+        checkYetki(1, 2);
+        return service.update(dto);
     }
 }

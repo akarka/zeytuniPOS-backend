@@ -5,8 +5,11 @@ import com.kadir.zeytuniPOS.core.security.SecurityUtil;
 import com.kadir.zeytuniPOS.data.UrunKategorileri;
 import com.kadir.zeytuniPOS.dto.*;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -20,38 +23,34 @@ public class UrunKategorileriController extends BaseController<UrunKategorileri,
         this.service = service;
     }
 
+    private void checkYetki(int... izinliRoller) {
+        Integer rolId = SecurityUtil.getCurrentUserRolId();
+        if (rolId == null || Arrays.stream(izinliRoller).noneMatch(id -> id == rolId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Bu işlem için yetkiniz yok.");
+        }
+    }
+
     @GetMapping("/dto")
     public List<UrunKategorileriDTO> getAllDTO() {
+        checkYetki(1, 2, 3);
         return service.getAllDTO();
     }
 
     @PostMapping("/dto")
     public UrunKategorileriDTO create(@RequestBody UrunKategorileriCreateDTO dto) {
-        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
-        try {
-            return service.createFromDTO(dto);
-        } finally {
-            SecurityUtil.clear(); // ThreadLocal'ı temizle
-        }
+        checkYetki(1);
+        return service.createFromDTO(dto);
     }
 
     @PutMapping("/dto")
     public UrunKategorileriDTO update(@RequestBody UrunKategorileriUpdateDTO dto) {
-        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
-        try {
-            return service.update(dto);
-        } finally {
-            SecurityUtil.clear(); // ThreadLocal'ı temizle
-        }
+        checkYetki(1);
+        return service.update(dto);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
-        SecurityUtil.setCurrentUserId(2); // Örnek kullanıcı ID(ileride authentication ile otomatik olacak)
-        try {
-            service.deleteById(id);
-        } finally {
-            SecurityUtil.clear(); // ThreadLocal'ı temizle
-        }
+        checkYetki(1);
+        service.deleteById(id);
     }
 }
