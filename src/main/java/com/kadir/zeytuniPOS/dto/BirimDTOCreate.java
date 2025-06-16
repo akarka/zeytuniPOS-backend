@@ -1,8 +1,14 @@
 package com.kadir.zeytuniPOS.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class BirimDTOCreate {
 
     private Integer birimId;
+    
+    @NotBlank(message = "Birim adı boş olamaz")
+    @Size(max = 30, message = "Birim adı en fazla 30 karakter olabilir")
     private String birimAdi;
 
     public Integer getBirimId() {

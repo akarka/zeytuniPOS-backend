@@ -42,19 +42,19 @@ public class KullaniciController extends BaseController<Kullanici, Integer> {
 
     @GetMapping("/dto")
     public List<KullaniciDTO> getAllKullanicilar() {
-        checkYetki(1, 2);
+        checkYetki(1, 2, 3);
         return kullaniciService.getAllKullanicilar();
     }
 
     @GetMapping("/dto/{id}")
     public KullaniciDTO getKullaniciById(@PathVariable Integer id) {
-        checkYetki(1, 2);
+        checkYetki(1, 2, 3);
         return kullaniciService.getKullaniciById(id);
     }
 
     @PostMapping("/dto")
     public KullaniciDTO create(@RequestBody KullaniciCreateDTO dto) {
-        checkYetki(1);
+        checkYetki(1, 2, 3);
         return kullaniciService.createFromDTO(dto);
     }
 

@@ -11,7 +11,7 @@ public class Urun {
     @Column(name = "UrunID")
     private Integer urunId;
 
-    @Column(name = "UrunAdi", nullable = false)
+    @Column(name = "UrunAdi", nullable = false, unique = true)
     private String urunAdi;
 
     @Column(name = "UrunAciklama")

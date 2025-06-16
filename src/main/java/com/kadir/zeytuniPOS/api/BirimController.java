@@ -39,6 +39,12 @@ public class BirimController extends BaseController<Birim, Integer> {
 
     @PostMapping("/dto")
     public BirimDTO create(@RequestBody BirimDTOCreate dto) {
+        boolean zatenVar = service.getAllDTO().stream()
+                .anyMatch(b -> b.getBirimAdi().equalsIgnoreCase(dto.getBirimAdi()));
+
+        if (zatenVar) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bu ad ile zaten bir birim var.");
+        }
         checkYetki(1, 2);
         return service.createFromDTO(dto);
     }

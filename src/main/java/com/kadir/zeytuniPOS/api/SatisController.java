@@ -46,7 +46,7 @@ public class SatisController extends BaseController<Satis, Integer> {
 
     @PutMapping("/dto")
     public SatisDTO update(@RequestBody SatisUpdateDTO dto) {
-        checkYetki(1, 2, 3);
+        checkYetki(1, 2);
         return service.update(dto);
     }
 
