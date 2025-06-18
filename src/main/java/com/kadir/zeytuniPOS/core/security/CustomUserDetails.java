@@ -29,7 +29,6 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Rol sistemi eklendiğinde burası genişletilecek
         return Collections.emptyList();
     }
 

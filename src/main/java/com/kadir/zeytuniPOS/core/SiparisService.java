@@ -10,6 +10,7 @@ import com.kadir.zeytuniPOS.mapper.SiparisMapper;
 import com.kadir.zeytuniPOS.mapper.SiparisKalemiMapper;
 import com.kadir.zeytuniPOS.data.SiparisRepository;
 import com.kadir.zeytuniPOS.data.SiparisKalemiRepository;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +26,8 @@ public class SiparisService {
     private final SiparisKalemiRepository siparisKalemiRepository;
     private final SiparisMapper siparisMapper;
     private final SiparisKalemiMapper siparisKalemiMapper;
-    private final UrunService urunService; // UrunService enjekte edildi
-    private final SatisService satisService; // SatisService enjekte edildi
+    private final UrunService urunService;
+    private final SatisService satisService;
 
     public SiparisService(SiparisRepository siparisRepository, SiparisKalemiRepository siparisKalemiRepository,
             SiparisMapper siparisMapper, SiparisKalemiMapper siparisKalemiMapper, UrunService urunService,
@@ -48,7 +49,7 @@ public class SiparisService {
     public SiparisDTO getSiparisDTOById(Integer id) {
         return siparisRepository.findById(id)
                 .map(siparisMapper::toDto)
-                .orElse(null); // Or throw an exception
+                .orElse(null);
     }
 
     @Transactional
@@ -56,13 +57,11 @@ public class SiparisService {
         Siparis siparis = siparisMapper.toEntity(siparisCreateDTO);
         siparis.setToplamFiyat(BigDecimal.ZERO);
 
-        // Save Siparis first to get siparisId
         siparis = siparisRepository.save(siparis);
 
         BigDecimal totalOrderPrice = BigDecimal.ZERO;
         if (siparisCreateDTO.getSiparisKalemleri() != null) {
             for (SiparisKalemiCreateDTO kalemiDTO : siparisCreateDTO.getSiparisKalemleri()) {
-                // Eğer satisFiyati belirtilmemişse, UrunService'den guncelSatisFiyati'ni çek
                 if (kalemiDTO.getSatisFiyati() == null) {
                     kalemiDTO.setSatisFiyati(urunService.getByIdDTO(kalemiDTO.getUrunId()).getGuncelSatisFiyati());
                 }
@@ -73,7 +72,6 @@ public class SiparisService {
                 totalOrderPrice = totalOrderPrice
                         .add(siparisKalemi.getSatisFiyati().multiply(BigDecimal.valueOf(siparisKalemi.getMiktar())));
 
-                // Sipariş onaylandığında Satis tablosuna kayıt at
                 SatisCreateDTO satisCreateDTO = new SatisCreateDTO();
                 satisCreateDTO.setUrunId(siparisKalemi.getUrun().getUrunId());
                 satisCreateDTO.setMiktar(siparisKalemi.getMiktar());
@@ -83,7 +81,7 @@ public class SiparisService {
             }
         }
         siparis.setToplamFiyat(totalOrderPrice);
-        siparisRepository.save(siparis); // Update total price
+        siparisRepository.save(siparis);
 
         return siparisMapper.toDto(siparis);
     }
@@ -93,21 +91,15 @@ public class SiparisService {
         Siparis existingSiparis = siparisRepository.findById(siparisId)
                 .orElseThrow(() -> new RuntimeException("Sipariş bulunamadı"));
 
-        // Update main order details
         existingSiparis.setMusteriId(siparisUpdateDTO.getMusteriId());
         existingSiparis.setSiparisDurumu(siparisUpdateDTO.getSiparisDurumu());
 
-        // Handle order items (SiparisKalemleri)
-        // This is a simplified update. A more robust solution would handle additions,
-        // deletions, and updates of individual items.
-        // For now, we'll clear existing items and add new ones.
         siparisKalemiRepository.deleteAll(existingSiparis.getSiparisKalemleri());
         existingSiparis.getSiparisKalemleri().clear();
 
         BigDecimal totalOrderPrice = BigDecimal.ZERO;
         if (siparisUpdateDTO.getSiparisKalemleri() != null) {
             for (SiparisKalemiCreateDTO kalemiDTO : siparisUpdateDTO.getSiparisKalemleri()) {
-                // Eğer satisFiyati belirtilmemişse, UrunService'den guncelSatisFiyati'ni çek
                 if (kalemiDTO.getSatisFiyati() == null) {
                     kalemiDTO.setSatisFiyati(urunService.getByIdDTO(kalemiDTO.getUrunId()).getGuncelSatisFiyati());
                 }
@@ -119,7 +111,6 @@ public class SiparisService {
                 totalOrderPrice = totalOrderPrice
                         .add(siparisKalemi.getSatisFiyati().multiply(BigDecimal.valueOf(siparisKalemi.getMiktar())));
 
-                // Sipariş onaylandığında Satis tablosuna kayıt at (güncelleme senaryosunda da)
                 SatisCreateDTO satisCreateDTO = new SatisCreateDTO();
                 satisCreateDTO.setUrunId(siparisKalemi.getUrun().getUrunId());
                 satisCreateDTO.setMiktar(siparisKalemi.getMiktar());

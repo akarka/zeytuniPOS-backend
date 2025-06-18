@@ -29,11 +29,11 @@ public class IslemLogAspect {
     @AfterReturning(pointcut = "@annotation(com.kadir.zeytuniPOS.core.logging.LogIslem)", returning = "result")
     public void logAfterMethodExecution(JoinPoint joinPoint, Object result) {
         try {
-            // Metod bilgilerini al
+            // Metod bilgileri
             MethodSignature signature = (MethodSignature) joinPoint.getSignature();
             Method method = signature.getMethod();
 
-            // Annotation'dan bilgileri al
+            // Annotation bilgileri
             LogIslem logIslem = method.getAnnotation(LogIslem.class);
             String islemTuru = logIslem.islemTuru();
             String hedefTablo = logIslem.hedefTablo();
@@ -41,11 +41,11 @@ public class IslemLogAspect {
             int hedefIdParametreIndeksi = logIslem.hedefIdParametreIndeksi();
             String hedefIdGetterMetodu = logIslem.hedefIdGetterMetodu();
 
-            // Hedef ID'yi belirle
+            // Hedef ID
             Integer hedefId = null;
             Object[] args = joinPoint.getArgs();
 
-            // CREATE işlemi için, dönen sonuçtan ID'yi al
+            // CREATE için ID
             if (islemTuru.equals("CREATE") && result != null) {
                 hedefId = extractIdFromObject(result, hedefTablo, hedefIdGetterMetodu);
             }
@@ -101,12 +101,7 @@ public class IslemLogAspect {
             // Log kaydını kaydet
             islemLogRepository.save(islemLog);
 
-            // Loglama bilgisini konsola yaz (debug için)
-            System.out.println("İşlem loglandı: " + islemTuru + " - " + hedefTablo + " - ID: " + hedefId);
-
         } catch (Exception e) {
-            // Loglama sırasında hata oluşursa, uygulamanın çalışmasını etkilememesi için
-            // hatayı yakala ve logla
             System.err.println("Loglama sırasında hata oluştu: " + e.getMessage());
             e.printStackTrace();
         }

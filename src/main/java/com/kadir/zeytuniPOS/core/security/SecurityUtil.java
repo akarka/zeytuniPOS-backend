@@ -17,7 +17,7 @@ public class SecurityUtil {
                 && authentication.getPrincipal() instanceof CustomUserDetails) {
             return ((CustomUserDetails) authentication.getPrincipal()).getId();
         }
-        return null; // Kullanıcı yoksa null döner
+        return null;
     }
 
     public static Integer getCurrentUserRolId() {

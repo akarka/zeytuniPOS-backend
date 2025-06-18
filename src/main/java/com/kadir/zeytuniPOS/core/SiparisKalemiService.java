@@ -36,14 +36,8 @@ public class SiparisKalemiService {
     public SiparisKalemiDTO update(SiparisKalemiUpdateDTO dto) {
         SiparisKalemi entity = repository.findById(dto.getSiparisKalemId())
                 .orElseThrow(() -> new RuntimeException("Sipariş kalemi bulunamadı"));
-        // Update fields from DTO to entity
         entity.setMiktar(dto.getMiktar());
         entity.setSatisFiyati(dto.getSatisFiyati());
-        // Assuming urunId is not updated directly, but through a new Urun object if
-        // needed
-        // entity.setUrun(mapper.mapUrunIdToUrun(dto.getUrunId())); // This would
-        // require fetching Urun from DB
-
         return mapper.toDto(repository.save(entity));
     }
 

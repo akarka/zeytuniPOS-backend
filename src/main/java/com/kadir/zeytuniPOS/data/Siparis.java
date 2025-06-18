@@ -13,7 +13,7 @@ public class Siparis {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer siparisId;
 
-    private Integer musteriId; // Müşteri tablosuna referans için, eğer varsa
+    private Integer musteriId;
 
     private BigDecimal toplamFiyat;
 
@@ -78,5 +78,3 @@ public class Siparis {
         this.siparisKalemleri = siparisKalemleri;
     }
 }
-
-

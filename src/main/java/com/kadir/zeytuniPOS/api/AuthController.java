@@ -18,27 +18,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth" )
+@RequestMapping("/api/auth")
 public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
-
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password, HttpServletRequest request) {
+    public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password,
+            HttpServletRequest request) {
         try {
             Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password)
-            );
-            
-        // Oturum bilgisini ayarla
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        
-        // HttpSession oluştur
-        HttpSession session = request.getSession(true);
-        session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
-            
+                    new UsernamePasswordAuthenticationToken(username, password));
+
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            HttpSession session = request.getSession(true);
+            session.setAttribute("SPRING_SECURITY_CONTEXT", SecurityContextHolder.getContext());
+
             Map<String, String> response = new HashMap<>();
             response.put("message", "Giriş başarılı");
             return ResponseEntity.ok(response);

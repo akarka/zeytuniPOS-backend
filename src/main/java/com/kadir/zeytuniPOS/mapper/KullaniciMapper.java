@@ -38,18 +38,15 @@ public interface KullaniciMapper {
         return entities.stream().map(this::toDTO).collect(Collectors.toList());
     }
 
-    // CREATE DTO → ENTITY
     @Mapping(target = "kullaniciId", ignore = true)
-    @Mapping(target = "sifreHash", ignore = true) // Şifre hash işlemi servis katmanında yapılacak
+    @Mapping(target = "sifreHash", ignore = true) // Şifre hash işlemi servis katmanında
     @Mapping(source = "rolId", target = "rol", qualifiedByName = "mapRolFromId")
     Kullanici toEntity(KullaniciCreateDTO dto);
 
-    // UPDATE DTO → ENTITY
-    @Mapping(target = "sifreHash", ignore = true) // Şifre güncellemesi servis seviyesinde yapılacak
+    @Mapping(target = "sifreHash", ignore = true)
     @Mapping(source = "rolId", target = "rol", qualifiedByName = "mapRolFromId")
     Kullanici toEntity(KullaniciUpdateDTO dto);
 
-    // ID → Rol (rolId'den Rol nesnesi üret)
     @Named("mapRolFromId")
     static Rol mapRolFromId(Integer id) {
         if (id == null)
